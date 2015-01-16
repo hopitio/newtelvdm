@@ -1,0 +1,135 @@
+body {
+	padding-top: 50px;
+}
+body > .navbar {
+	transition:background-color 300ms ease-in; -webkit-transition: background-color 300ms ease-in;
+}
+body > .navbar-transparent {
+	background-color: transparent;
+}
+body > .navbar-transparent .navbar-nav > .open > a {
+	background-color: transparent !important;
+}
+#home {
+	padding-top: 0px;
+}
+#home .navbar-brand {
+	padding: 13.5px 15px 12.5px;
+}
+#home .navbar-brand > img {
+	margin: 0px 8px; height: 100%; display: inline;
+}
+#banner {
+	border-bottom-color: currentColor; border-bottom-width: medium; border-bottom-style: none; min-height: 300px;
+}
+.page-header h1 {
+	font-size: 4em;
+}
+.bs-docs-section {
+	margin-top: 8em;
+}
+.bs-component {
+	position: relative;
+}
+.bs-component .modal {
+	left: auto; top: auto; right: auto; bottom: auto; display: block; position: relative; z-index: 1;
+}
+.bs-component .modal-dialog {
+	width: 90%;
+}
+.bs-component .popover {
+	margin: 20px; width: 220px; display: inline-block; position: relative;
+}
+#source-button {
+	top: 0px; right: 0px; font-weight: bold; position: absolute; z-index: 100;
+}
+.nav-tabs {
+	margin-bottom: 15px;
+}
+.progress {
+	margin-bottom: 10px;
+}
+footer {
+	margin: 5em 0px;
+}
+footer li {
+	margin-right: 1.5em; margin-bottom: 1.5em; float: left;
+}
+footer p {
+	clear: left; margin-bottom: 0px;
+}
+.splash {
+	padding: 9em 0px 2em; text-align: center; color: rgb(255, 255, 255); background-image: url("../img/bg.jpg"); background-attachment: fixed; background-size: cover; background-color: rgb(20, 29, 39);
+}
+.splash .logo {
+	width: 160px;
+}
+.splash h1 {
+	font-size: 3em;
+}
+.splash #social {
+	margin: 2em 0px;
+}
+.splash .alert {
+	margin: 2em 0px;
+}
+.section-tout {
+	padding: 4em 0px 3em; border-bottom-color: rgba(0, 0, 0, 0.05); border-bottom-width: 1px; border-bottom-style: solid; background-color: rgb(234, 241, 241);
+}
+.section-tout .fa {
+	margin-right: 0.5em;
+}
+.section-tout p {
+	margin-bottom: 3em;
+}
+.section-preview {
+	padding: 4em 0px;
+}
+.section-preview .preview {
+	margin-bottom: 4em; background-color: rgb(234, 241, 241);
+}
+.section-preview .preview .image {
+	position: relative;
+}
+.section-preview .preview .image::before {
+	left: 0px; top: 0px; width: 100%; height: 100%; position: absolute; content: ""; pointer-events: none; box-shadow: inset 0px 0px 0px 1px rgba(0,0,0,0.1);
+}
+.section-preview .preview .options {
+	border-width: medium 1px 1px; border-style: none solid solid; border-color: currentColor rgba(0, 0, 0, 0.05) rgba(0, 0, 0, 0.05); padding: 1em 2em 2em; border-image: none; text-align: center;
+}
+.section-preview .preview .options p {
+	margin-bottom: 2em;
+}
+.section-preview .dropdown-menu {
+	text-align: left;
+}
+.section-preview .lead {
+	margin-bottom: 2em;
+}
+@media all and (max-width:767px)
+{
+.section-preview .image img {
+	width: 100%;
+}
+}
+.sponsor {
+	text-align: center;
+}
+.sponsor a:hover {
+	text-decoration: none;
+}
+@media all and (max-width:767px)
+{
+.splash {
+	padding-top: 4em;
+}
+.splash .logo {
+	width: 100px;
+}
+.splash h1 {
+	font-size: 2em;
+}
+#banner {
+	text-align: center; margin-bottom: 2em;
+}
+}
