@@ -16,6 +16,7 @@ class View
         if (user()->is_logged)
         {
             $this->add_main_nav('schedule', 'Lịch họp', site_url('/index'))
+                    ->add_main_nav('request', 'Yêu cầu cuộc họp', site_url('/request'))
                     ->add_main_nav('history', 'Tra cứu cuộc họp cũ', site_url('/history'));
         }
     }

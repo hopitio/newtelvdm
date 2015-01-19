@@ -19,10 +19,18 @@ $(function () {
 
 $(function () {
     $('.datepicker').each(function () {
-        $(this).datepicker({
+        var $this = $(this);
+        var opts = {
             todayHighlight: true,
-            format: "dd/mm/yyyy"
-        });
+            format: "dd/mm/yyyy",
+            language: 'vi'
+        };
+        
+        if ($this.attr('data-date-start-date')) {
+            opts['startDate'] = $this.attr('data-date-start-date');
+        }
+
+        $(this).datepicker(opts);
     });
     $('.timepicker').each(function () {
         $(this).timepicker({

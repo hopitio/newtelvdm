@@ -50,6 +50,10 @@
                     </div>
                 </div>
             </div>
+            <?php if (isset($error)): ?>
+                <span class="red"><?php echo $error ?></span>
+                <br>
+            <?php endif; ?>
             <input type="submit" class="btn btn-primary" value="Cập nhật"/>
             <a href="<?php echo site_url('/admin/account') ?>" class="btn btn-default">Quay về danh sách</a>
         </form>

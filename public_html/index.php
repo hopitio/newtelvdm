@@ -1,6 +1,14 @@
 <?php
 
 define('BASE_DIR', __DIR__ . '/');
+
+//install nếu chưa khởi tạo
+if (!file_exists(BASE_DIR . 'config.php'))
+{
+    require(BASE_DIR . 'install/install.php');
+    die;
+}
+
 require BASE_DIR . 'config.php';
 
 if (DEBUG_MODE)

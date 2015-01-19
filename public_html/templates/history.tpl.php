@@ -18,8 +18,8 @@
         <?php endif; ?>
         <?php foreach ($arr_conf as $conf): ?>
             <?php
-            $begin = date_create($conf['startTime']);
-            $finish = date_create($conf['finishTime']);
+            $begin = DateTimeEx::create($conf['startTime'])->addHour(7);
+            $finish = DateTimeEx::create($conf['finishTime'])->addHour(7);
             $recording_url = site_url('/recording', array('app_id' => $conf['app_id']));
             ?>
             <tr>

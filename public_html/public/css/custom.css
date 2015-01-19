@@ -40,3 +40,10 @@ i{
     vertical-align: middle;
     white-space: nowrap;
 }
+.bootstrap-timepicker-widget.dropdown-menu{
+    z-index: 1050;
+}
+label.inline{
+    display: inline-block;
+    font-weight: normal;
+}

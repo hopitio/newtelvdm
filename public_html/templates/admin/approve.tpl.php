@@ -1,6 +1,11 @@
 <?php ?>
 
 <form>
+    <div class="pull-left">
+        <a href="<?php echo site_url('/admin/edit_appointment', array('app_id' => 0)) ?>" data-toggle="modal" class="btn btn-primary">
+            <i class="fa fa-plus"></i> Thêm mới
+        </a>
+    </div>
     <div class="pull-right form-inline">
         <input type="hidden" name="page" value="<?php echo (int) get_request_var('page', 1) ?>"/>
         <input type="text" name="search" value="<?php echo get_request_var('search') ?>" class="form-control" placeholder="tìm chủ đề họp"/>
@@ -28,8 +33,9 @@
             <?php endif; ?>
             <?php foreach ($arr_conf as $conf): ?>
                 <?php
-                $start_date = DateTimeEx::create($conf['startTime']);
-                $end_date = DateTimeEx::create($conf['finishTime']);
+                $start_date = DateTimeEx::create($conf['startTime'])->addHour(7);
+                $end_date = DateTimeEx::create($conf['finishTime'])->addHour(7);
+                $now = DateTimeEx::create();
                 $join_url = site_url('/join_conf', array('app_id' => $conf['app_id']));
                 $edit_url = site_url('/admin/edit_appointment', array('app_id' => $conf['app_id']));
                 $recording_url = site_url('/recording', array('app_id' => $conf['app_id']));
@@ -72,7 +78,11 @@
                             <button type="submit" name="btn_decline" value="<?php echo $conf['app_id'] ?>" class="btn btn-default btn-xs"  title="Từ chối">
                                 <i class="fa fa-close"></i>
                             </button>
-                            <a href="<?php echo $join_url ?>" class="btn btn-default btn-xs" title="Tham gia"><i class="fa fa-arrow-circle-right"></i></a>
+                            <?php if ($start_date <= $now && $end_date >= $now): ?>
+                                <a href="<?php echo $join_url ?>" class="btn btn-default btn-xs" title="Tham gia"><i class="fa fa-arrow-circle-right"></i></a>
+                            <?php else: ?>
+                                <button type="button" class="btn btn-default btn-xs" title="Tham gia" disabled><i class="fa fa-arrow-circle-right"></i></button>
+                            <?php endif; ?>
                         <?php else: ?>
                             <button type="button" class="btn btn-default btn-xs" title="Tham gia" disabled><i class="fa fa-arrow-circle-right"></i></button>
                         <?php endif; ?>

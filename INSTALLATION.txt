@@ -1,0 +1,33 @@
+Đầu tiên, backup lại CSDL và code của Videomost, xóa hết những conference cũ trong hệ thống
+Upload thư mục public_html lên thư mục /var/www/public_html
+
+> mv /var/www/public_html /var/www/newtel
+> chmod 0777 -R /var/www/newtel
+> chmod 0777 -R /usr/share/videomost
+
+Config lại Apache:
+> nano /etc/apache2/sites-available/default
+
+Sửa như sau:
+<Directory /var/www/>
+	Options Indexes FollowSymLinks MultiViews
+	AllowOverride All
+	Order allow,deny
+	Allow from all
+	Satisfy Any
+</Directory>
+
+Khởi lại apache
+> service apache2 restart
+
+Truy cập vào đường dẫn http://<hostname>/newtel, lần đầu sẽ phải truy cập vào trang cài đặt
+, điền hết các tham số để cấu hình hệ thống.
+
+Cấu hình xong truy cập vào http://<hostname>/newtel, đăng nhập admin/123456
+
+NOTE: Trường hợp cài đặt gặp lỗi phải làm lại bước cấu hình, xóa file config:
+> rm -rf /var/www/newtel/config.php
+Truy cập vào đường dẫn http://<hostname>/newtel và điền tham số. CSDL về người sử dụng
+
+
+

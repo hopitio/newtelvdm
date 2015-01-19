@@ -2,7 +2,7 @@
     td{vertical-align: middle;}
 
 </style>
-    <h4>Danh sách cuộc họp chủ trì</h4>
+<h4>Danh sách cuộc họp chủ trì</h4>
 <table class="table  table-bordered">
     <thead>
         <tr>
@@ -21,8 +21,9 @@
         <?php endif; ?>
         <?php foreach ($arr_host_conf as $conf): ?>
             <?php
-            $start_date = DateTimeEx::create($conf['startTime']);
-            $end_date = DateTimeEx::create($conf['finishTime']);
+            $start_date = DateTimeEx::create($conf['startTime'])->addHour(7);
+            $end_date = DateTimeEx::create($conf['finishTime'])->addHour(7);
+            $now = DateTimeEx::create();
             $join_url = site_url('/join_conf', array('app_id' => $conf['app_id']));
             $manage_url = site_url('/attendiees', array('app_id' => $conf['app_id']));
             ?>
@@ -48,9 +49,15 @@
                     <?php endif; ?>
                 </td>
                 <td>
-                    <a href="<?php echo $join_url ?>" title="Tham gia hội nghị" class="btn btn-primary btn-xs">
-                        <i class="fa fa-arrow-circle-right"></i> Tham gia
-                    </a>
+                    <?php if ($start_date <= $now && $end_date >= $now): ?>
+                        <a href="<?php echo $join_url ?>" title="Tham gia hội nghị" class="btn btn-primary btn-xs">
+                            <i class="fa fa-arrow-circle-right"></i> Tham gia
+                        </a>
+                    <?php else: ?>
+                        <button type="button" disabled title="Tham gia hội nghị" class="btn btn-primary btn-xs">
+                            <i class="fa fa-arrow-circle-right"></i> Tham gia
+                        </button>
+                    <?php endif; ?>
                     <a href="<?php echo $manage_url ?>" class="btn btn-default btn-xs">
                         <i class="fa fa-group"></i> Danh sách khách mời
                     </a>
@@ -79,8 +86,9 @@
         <?php endif; ?>
         <?php foreach ($arr_invited_conf as $conf): ?>
             <?php
-            $start_date = DateTimeEx::create($conf['startTime']);
-            $end_date = DateTimeEx::create($conf['finishTime']);
+            $start_date = DateTimeEx::create($conf['startTime'])->addHour(7);
+            $end_date = DateTimeEx::create($conf['finishTime'])->addHour(7);
+            $now = DateTimeEx::create();
             $join_url = site_url('/join_conf', array('app_id' => $conf['app_id']));
             ?>
             <tr>
@@ -108,57 +116,17 @@
                     <?php echo $conf['owner_name'] ?>
                 </td>
                 <td>
-                    <a href="<?php echo $join_url ?>" title="Tham gia hội nghị" class="btn btn-primary btn-xs">
-                        <i class="fa fa-arrow-circle-right"></i> Tham gia
-                    </a>
+                    <?php if ($start_date <= $now && $end_date >= $now): ?>
+                        <a href="<?php echo $join_url ?>" title="Tham gia hội nghị" class="btn btn-primary btn-xs">
+                            <i class="fa fa-arrow-circle-right"></i> Tham gia
+                        </a>
+                    <?php else: ?>
+                        <button type="button" disabled title="Tham gia hội nghị" class="btn btn-primary btn-xs">
+                            <i class="fa fa-arrow-circle-right"></i> Tham gia
+                        </button>
+                    <?php endif; ?>
                 </td>
             </tr>
         <?php endforeach; ?>
     </tbody>
 </table>
-<br>
-<h2><center>Yêu cầu thiết lập cuộc họp</center></h2>
-<hr>
-<br>
-<form class="form-validate" method="post">
-    <div class="row">
-        <div class="col-sm-6 col-sm-offset-3">
-            <div class="form-group">
-                <label for="txt_conf_name">Chủ đề họp<span class="red"> *</span></label>
-                <input type="text" name="txt_conf_name" id="txt_conf_name" class="form-control" data-rule-required="true"/>
-            </div>
-            <div class="row">
-                <div class="col-xs-6">
-                    <div class="form-group">
-                        <label for="txt_conf_start_date">Bắt đầu<span class="red"> *</span></label>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <input type="text" name="txt_conf_start_date" id="txt_conf_start_date" class="form-control datepicker"
-                                       placeholder="ngày" data-rule-required="true"/>
-                            </div>
-                            <div class="col-sm-6">
-                                <input type="text" name="txt_conf_start_time" id="txt_conf_start_time" class="form-control timepicker" 
-                                       placeholder="giờ" data-rule-required="true"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-6">
-                    <div class="form-group">
-                        <label for="txt_conf_end_date">Kết thúc<span class="red"> *</span></label>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <input type="text" name="txt_conf_end_date" id="txt_conf_end_date" class="form-control datepicker"
-                                       placeholder="ngày" data-rule-required="true"/>
-                            </div>
-                            <div class="col-sm-6">
-                                <input type="text" name="txt_conf_end_time" id="txt_conf_end_time" class="form-control timepicker" placeholder="giờ" data-rule-required="true"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <center><input type="submit" name="btn_request_conf" value="Gửi yêu cầu" class="btn btn-primary btn-block"/></center>
-        </div>
-    </div>
-</form>

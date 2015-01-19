@@ -12,7 +12,7 @@ if ($_POST)
     $account = get_post_var('txt_account');
     $pass = get_post_var('txt_pass');
 
-    $user_data = $db->GetRow("SELECT * FROM nt_user WHERE c_account=? AND c_password=?", array($account, hash_password($pass)));
+    $user_data = $db->GetRow("SELECT * FROM nt_user WHERE c_account=? AND c_password=? AND c_deleted=0", array($account, hash_password($pass)));
     if (empty($user_data))
     {
         $view->set_data(array(
