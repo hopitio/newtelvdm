@@ -38,5 +38,6 @@ $view = View::get_instance()
         ->set_title('Quản trị tài khoản')
         ->set_heading('Quản trị tài khoản')
         ->set_data(array('arr_user' => $arr_user))
+        ->set_active_main_nav('account')
         ->render('admin/account')
 ;

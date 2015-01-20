@@ -8,10 +8,15 @@ if (get_post_var('btn_request_conf'))
     $password = uniqid();
     $start_date = DateTimeEx::createFrom_dmY_Hi(get_post_var('txt_conf_start_date') . ' ' . get_post_var('txt_conf_start_time'))->addHour(-7);
     $end_date = DateTimeEx::createFrom_dmY_Hi(get_post_var('txt_conf_end_date') . ' ' . get_post_var('txt_conf_end_time'))->addHour(-7);
+    $now = DateTimeEx::create()->addHour(-7);
 
     if ($start_date >= $end_date)
     {
         $view_data['request_error'] = "Ngày bắt đầu phải trước ngày kết thúc";
+    }
+    else if ($start_date <= $now)
+    {
+        $view_data['request_error'] = "Thời gian bắt đầu cần phải ở tương lai";
     }
 
     if (!isset($view_data['request_error']))
@@ -57,9 +62,19 @@ if (get_post_var('btn_request_conf'))
     }
 }
 
+$sql = "
+    SELECT * FROM appointments app
+    WHERE app.owner_id=?
+    AND app.is_deleted=0
+    AND app.is_approved=0
+    ORDER BY app.startTime
+";
+$view_data['arr_conf'] = $db->GetAll($sql, array(user()->pk_user));
+
 View::get_instance()
         ->set_active_main_nav('request')
         ->set_title('Yêu cầu cuộc họp')
         ->set_heading('Yêu cầu cuộc họp')
+        ->set_data($view_data)
         ->render('request');
 

@@ -46,6 +46,45 @@
         </div>
     </div>
 </form>
+<br>
+<br>
+<h2 class="center">Yêu cầu chờ duyệt</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th width="15%">Bắt đầu</th>
+            <th width="15%">Kết thúc</th>
+            <th width="70%">Chủ đề</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php if (!count($arr_conf)): ?>
+            <tr>
+                <td colspan="3" class="center">Chưa có cuộc họp</td>
+            </tr>
+        <?php endif; ?>
+        <?php foreach ($arr_conf as $conf): ?>
+            <?php
+            $start_date = DateTimeEx::create($conf['startTime'])->addHour(7);
+            $end_date = DateTimeEx::create($conf['finishTime'])->addHour(7);
+            ?>
+            <tr>
+                <td>
+                    <strong><?php echo $start_date->format('d') . ' thg ' . $start_date->format('m') ?></strong>
+                    &nbsp;-&nbsp;
+                    <?php echo $start_date->format('H:i') ?>
+                </td>
+                <td>
+                    <strong><?php echo $end_date->format('d') . ' thg ' . $end_date->format('m') ?></strong>
+                    &nbsp;-&nbsp;
+                    <?php echo $end_date->format('H:i') ?>
+                </td>
+                <td><?php echo $conf['topic'] ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+
 <script>
     $('#txt_conf_start_date').change(function () {
         $('#txt_conf_end_date').datepicker('setStartDate', $(this).val());

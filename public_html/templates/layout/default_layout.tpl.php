@@ -22,54 +22,31 @@
         <script src="<?php echo SITE_URL ?>/public/js/jquery-1.10.2.min.js"></script>
     </head>
     <body>
-        <div class="navbar navbar-default navbar-fixed-top">
+        <div id="top_nav">
             <div class="container">
-                <div class="navbar-header">
-                    <a href="<?php echo SITE_URL ?>" class="navbar-brand">
-                        <img src='<?php echo SITE_URL ?>public/images/logo.png' style='max-height: 100%;max-width: 100%;'/>
-                    </a>
-                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-                <div class="navbar-collapse collapse" id="navbar-main">
-                    <ul class="nav navbar-nav">
-                        <?php foreach ($this->main_nav as $k => $nav): ?>
-                            <?php
-                            $active = $k == $this->active_main_nav ? 'active' : '';
-                            ?>
-                            <li class="<?php echo $active ?>">
-                                <a href="<?php echo $nav['url'] ?>"><?php echo $nav['label'] ?></a>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
-
-                    <ul class="nav navbar-nav navbar-right">
+                <div class="logo">
+                    <div class="pull-right">
                         <?php if (user()->is_logged): ?>
-                            <li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="dropdown-user"><i class="fa fa-user"></i> <?php echo user()->name ?></a>
-                                <ul class="dropdown-menu" aria-labelledby="dropdown-user">
-                                    <li><a href="<?php echo site_url('/change_password') ?>">Đổi mật khẩu</a></li>
-                                    <li><a href="<?php echo site_url('/login') ?>">Đăng xuất</a></li>
-                                </ul>
-                            </li>
+                            <?php echo user()->name ?>
+                            &nbsp;|&nbsp;
+                            <a href="<?php echo site_url('/change_password') ?>">Đổi mật khẩu</a>
+                            &nbsp;|&nbsp;
+                            <a href="<?php echo site_url('/login') ?>"> Đăng xuất</a>
                         <?php endif; ?>
-                        <?php if (user()->is_admin): ?>
-                            <li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="dropdown-admin"><i class="fa fa-cog"></i></a>
-                                <ul class="dropdown-menu" aria-labelledby="dropdown-user">
-                                    <li><a href="<?php echo site_url('/admin/account') ?>">Quản trị tài khoản</a></li>
-                                    <li><a href="<?php echo site_url('/admin/approve') ?>">Duyệt lịch họp</a></li>
-                                </ul>
-                            </li>
-                        <?php endif; ?>
-                    </ul>
-
+                    </div>
                 </div>
+                <ul class="nav_items">
+                    <?php foreach ($this->main_nav as $k => $nav): ?>
+                        <?php
+                        $active = $k == $this->active_main_nav ? 'active' : '';
+                        ?>
+                        <li class="<?php echo $active ?>">
+                            <a href="<?php echo $nav['url'] ?>"><?php echo $nav['label'] ?></a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
             </div>
-        </div>
+        </div><!--top_nav-->
         <div class="container" >
             <div id='main-content'>
                 <?php if ($this->heading): ?>
@@ -79,17 +56,28 @@
                 <?php endif; ?>
                 {{LAYOUT_CONTENT}}
             </div>
-            <footer>
+
+        </div>
+        <div class="footer">
+            <div class="container">
                 <div class="row">
-                    <div class="col-lg-12">
-                        <hr>
-                        Giải pháp hội nghị truyền hình - Phát triển bởi công ty cổ phần viễn thông New-Telecom.<br>
-                        Website: <a href='http://newtel.vn'>http://newtel.vn</a>
+                    <div class="col-xs-6">
+                        <h4>Cơ quan chủ quản</h4>
+                        Trung tâm Công nghệ Thông tin & Truyền thông TP. HCM<br>
+                        Địa chỉ: 59 Lý tự trọng - P.Bến Nghé - Quận 1 TP.HCM<br>
+                        Điện thoại: (08)38223989<br>
+                        Website: <a href="http://www.icti-hcm.gov.vn/">http://www.icti-hcm.gov.vn</a>
+                    </div>
+                    <div class="col-xs-6">
+                        <h4>Đơn vị phát triển</h4>
+                        Công ty Cổ phần Viễn thông New - Telecom<br>
+                        Địa chỉ: Số 8, Láng Hạ, Ba Đình, Hà Nội<br>
+                        Điện thoại: 043.7727766<br>
+                        Website: <a href='http://www.newtel.vn'>http://www.newtel.vn</a>
                     </div>
                 </div>
-            </footer>
+            </div>
         </div>
-
 
         <script src="<?php echo SITE_URL ?>/public/js/bootstrap.min.js"></script>
         <script src="<?php echo SITE_URL ?>/public/js/bootswatch.js"></script>

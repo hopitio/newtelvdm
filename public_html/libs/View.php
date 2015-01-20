@@ -15,9 +15,20 @@ class View
     {
         if (user()->is_logged)
         {
-            $this->add_main_nav('schedule', 'Lịch họp', site_url('/index'))
-                    ->add_main_nav('request', 'Yêu cầu cuộc họp', site_url('/request'))
-                    ->add_main_nav('history', 'Tra cứu cuộc họp cũ', site_url('/history'));
+            if (user()->is_admin)
+            {
+                $this->add_main_nav('approve', '<i class="fa fa-check-square"></i> Duyệt lịch họp', site_url('/admin/approve'));
+            }
+            $this->add_main_nav('schedule', '<i class="fa fa-calendar"></i> Lịch họp', site_url('/index'));
+            if (!user()->is_admin)
+            {
+                $this->add_main_nav('request', '<i class="fa fa-info"></i> Yêu cầu cuộc họp', site_url('/request'));
+            }
+            if (user()->is_admin)
+            {
+                $this->add_main_nav('account', '<i class="fa fa-cog"></i> Quản trị tài khoản', site_url('/admin/account'));
+            }
+            $this->add_main_nav('history', '<i class="fa fa-clock-o"></i> Tra cứu cuộc họp cũ', site_url('/history'));
         }
     }
 

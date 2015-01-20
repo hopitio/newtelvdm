@@ -48,6 +48,7 @@ $view_data['total_page'] = max(array(1, ceil($total_record / $limit)));
 
 View::get_instance()
         ->set_title('Duyệt lịch họp')
+        ->set_active_main_nav('approve')
         ->set_heading('Duyệt lịch họp')
         ->set_data($view_data)
         ->render('admin/approve');

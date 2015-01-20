@@ -1,3 +1,7 @@
+body{
+    padding-top:0;
+    background: #F8F8F8;
+}
 #main-content{
     min-height: 300px;
 }
@@ -36,6 +40,9 @@ i{
 .label[type="button"]{
     border:none;
 }
+table{
+    background: white;
+}
 .table-bordered > tbody > tr > td{
     vertical-align: middle;
     white-space: nowrap;
@@ -46,4 +53,99 @@ i{
 label.inline{
     display: inline-block;
     font-weight: normal;
+}
+.navbar-brand{
+    padding: 10px;
+}
+#top_nav{
+    overflow: hidden;
+    background: url("../images/bgTop.png") repeat-x;
+    height: 110px;
+    overflow: hidden;
+}
+#top_nav .container{
+    background: url('../images/bgBanner.png') no-repeat;
+}
+#top_nav .logo{
+    height: 77px;
+}
+#top_nav .logo .pull-right{
+    width: 600px;
+    height: 77px;
+    text-align: right;
+    font-size: 0.9em;
+    background: url('../images/newtel_logo.png') no-repeat;
+    background-position-x: right;
+    background-position-y: 10px;
+    padding-top:55px;
+}
+#top_nav .logo .pull-right{
+    color: #ccc;
+}
+#top_nav .logo .pull-right a{
+    color: #FCD800;
+}
+#top_nav ul.nav_items{
+    list-style-type: none;
+    display:block;
+    overflow: hidden;
+    padding-left: 105px;
+    position: relative;
+    height: 33px;
+}
+#top_nav ul.nav_items li{
+    float:left;
+}
+#top_nav ul.nav_items li a{
+    display:inline-block;
+    padding: 0 12px;
+    text-transform: uppercase;
+    color: white;
+    white-space: nowrap;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 33px;
+    text-decoration: none;
+    background: url('../images/menuVer.png') no-repeat left top;
+}
+#top_nav ul.nav_items li:first-child a{
+    background: none;
+}
+#top_nav ul.nav_items li a:hover, #top_nav ul.nav_items li a:hover i{
+    color: #bc0000;
+}
+#top_nav ul li.active a, #top_nav ul li.active a i{
+    color: #FCDE55;
+}
+#top_nav ul.nav_items li a:hover{
+    background: #EBF0F5;
+}
+h2,h4{
+    color: #D70000;
+}
+.btn-primary {
+    background-image: -webkit-linear-gradient(#6d94bf, #446e9b 50%, #3e648d);
+    background-image: -o-linear-gradient(#6d94bf, #446e9b 50%, #3e648d);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#6d94bf), color-stop(50%, #446e9b), to(#3e648d));
+    background-image: linear-gradient(#6d94bf, #446e9b 50%, #3e648d);
+    background-repeat: no-repeat;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff6d94bf', endColorstr='#ff3e648d', GradientType=0);
+    -webkit-filter: none;
+    filter: none;
+    border: 1px solid #345578;
+}
+.footer{
+    background: #0F4366;
+    color: white;
+    padding: 30px 0;
+    font-size: 0.9em;
+    margin-top: 20px;
+    font-family: arial;
+}
+.footer a{
+    color: #FCD800;
+}
+.footer h4{
+    color: white;
+    text-transform: uppercase;
 }
