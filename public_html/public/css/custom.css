@@ -77,6 +77,7 @@ label.inline{
     background: url('../images/newtel_logo.png') no-repeat;
     background-position-x: right;
     background-position-y: 10px;
+    background-size: auto 40px;
     padding-top:55px;
 }
 #top_nav .logo .pull-right{
