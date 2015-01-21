@@ -23,7 +23,7 @@ else if ($app_id = get_post_var('btn_decline'))
 $cond = "is_deleted=0";
 if ($search = get_request_var('search'))
 {
-    $cond .= " AND app.topic LIKE '%{$search}%'";
+    $cond .= " AND (app.topic LIKE '%{$search}%' OR u.c_name LIKE '%{$search}%')";
 }
 
 $limit = 20;

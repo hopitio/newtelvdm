@@ -47,6 +47,6 @@ if ($_POST)
 }
 
 $view->set_title('Đăng nhập hội nghị truyền hình')
-        ->set_heading('Thông tin đăng nhập')
+        ->set_heading('Hội nghị truyền hình trực tuyến')
         ->render('login');
 

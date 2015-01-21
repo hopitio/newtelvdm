@@ -64,7 +64,7 @@
                     <div class="col-xs-6">
                         <h4>Cơ quan chủ quản</h4>
                         Trung tâm Công nghệ Thông tin & Truyền thông TP. HCM<br>
-                        Địa chỉ: 59 Lý tự trọng - P.Bến Nghé - Quận 1 TP.HCM<br>
+                        Địa chỉ: 59 Lý Tự Trọng - P.Bến Nghé - Quận 1 TP.HCM<br>
                         Điện thoại: (08)38223989<br>
                         Website: <a href="http://www.icti-hcm.gov.vn/">http://www.icti-hcm.gov.vn</a>
                     </div>
@@ -72,7 +72,10 @@
                         <h4>Đơn vị phát triển</h4>
                         Công ty Cổ phần Viễn thông New - Telecom<br>
                         Địa chỉ: Số 8, Láng Hạ, Ba Đình, Hà Nội<br>
-                        Điện thoại: 043.7727766<br>
+                        Điện thoại: 043.772.7766
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        Hotline: 0973.901.982
+                        <br>
                         Website: <a href='http://www.newtel.vn'>http://www.newtel.vn</a>
                     </div>
                 </div>
