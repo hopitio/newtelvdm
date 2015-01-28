@@ -150,3 +150,9 @@ h2,h4{
     color: white;
     text-transform: uppercase;
 }
+.line-through{
+    text-decoration: line-through;
+}
+.line-through .btn{
+    text-decoration:none;
+}

@@ -26,6 +26,7 @@
             $now = DateTimeEx::create();
             $join_url = site_url('/join_conf', array('app_id' => $conf['app_id']));
             $manage_url = site_url('/attendiees', array('app_id' => $conf['app_id']));
+            $record_url = site_url('/recording', array('app_id' => $conf['app_id']));
             ?>
             <tr>
                 <td>
@@ -34,8 +35,8 @@
                 <td>
                     <?php echo '<strong>' . $end_date->format('d') . ' thg ' . $end_date->format('m') . '</strong> - ' . $end_date->format('H:i') ?>
                 </td>
-                <td>
-                    <?php echo $conf['topic'] ?>
+                <td title="<?php echo $conf['topic'] ?>">
+                    <?php echo mb_strlen($conf['topic'], 'UTF-8') > 50 ? mb_substr($conf['topic'], 0, 50, 'UTF-8') . '...' : $conf['topic'] ?>
                 </td>
                 <td class="center">
                     <?php if (is_conference_started($conf['confroom_id'])): ?>
@@ -60,6 +61,9 @@
                     <?php endif; ?>
                     <a href="<?php echo $manage_url ?>" class="btn btn-default btn-xs">
                         <i class="fa fa-group"></i> Danh sách khách mời
+                    </a>
+                    <a href="<?php echo $record_url ?>" class="btn btn-default btn-xs" title="Recording">
+                        <i class="fa fa-film"></i>
                     </a>
                 </td>
             </tr>
@@ -90,6 +94,7 @@
             $end_date = DateTimeEx::create($conf['finishTime'])->addHour(7);
             $now = DateTimeEx::create();
             $join_url = site_url('/join_conf', array('app_id' => $conf['app_id']));
+            $record_url = site_url('/recording', array('app_id' => $conf['app_id']));
             ?>
             <tr>
                 <td>
@@ -98,8 +103,8 @@
                 <td>
                     <?php echo '<strong>' . $end_date->format('d') . ' thg ' . $end_date->format('m') . '</strong> - ' . $end_date->format('H:i') ?>
                 </td>
-                <td>
-                    <?php echo $conf['topic'] ?>
+                <td title="<?php echo $conf['topic'] ?>">
+                    <?php echo mb_strlen($conf['topic'], 'UTF-8') > 40 ? mb_substr($conf['topic'], 0, 40, 'UTF-8') . '...' : $conf['topic'] ?>
                 </td>
                 <td class="center">
                     <?php if (is_conference_started($conf['confroom_id'])): ?>
@@ -125,6 +130,9 @@
                             <i class="fa fa-arrow-circle-right"></i> Tham gia
                         </button>
                     <?php endif; ?>
+                    <a href="<?php echo $record_url ?>" class="btn btn-default btn-xs" title="Recording">
+                        <i class="fa fa-film"></i>
+                    </a>
                 </td>
             </tr>
         <?php endforeach; ?>

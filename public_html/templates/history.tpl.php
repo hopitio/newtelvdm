@@ -21,15 +21,18 @@
             $begin = DateTimeEx::create($conf['startTime'])->addHour(7);
             $finish = DateTimeEx::create($conf['finishTime'])->addHour(7);
             $recording_url = site_url('/recording', array('app_id' => $conf['app_id']));
+            $line_through = $conf['is_deleted'] ? 'line-through' : '';
             ?>
-            <tr>
+            <tr class="<?php echo $line_through ?>">
                 <td>
                     <?php echo '<strong>' . $begin->format('d') . ' thg ' . $begin->format('m') . '</strong> - ' . $begin->format('H:i') ?>
                 </td>
                 <td>
                     <?php echo '<strong>' . $finish->format('d') . ' thg ' . $finish->format('m') . '</strong> - ' . $finish->format('H:i') ?>
                 </td>
-                <td><?php echo $conf['topic'] ?></td>
+                <td title="<?php echo $conf['topic'] ?>">
+                    <?php echo mb_strlen($conf['topic'], 'UTF-8') > 50 ? mb_substr($conf['topic'], 0, 50, 'UTF-8') . '...' : $conf['topic'] ?>
+                </td>
                 <td><?php echo $conf['owner_name'] ?></td>
                 <td>
                     <a href="<?php echo $recording_url ?>" class="btn btn-xs btn-info" title="Recording">

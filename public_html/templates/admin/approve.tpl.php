@@ -1,5 +1,3 @@
-<?php ?>
-
 <form>
     <div class="pull-left">
         <a href="<?php echo site_url('/admin/edit_appointment', array('app_id' => 0)) ?>" data-toggle="modal" class="btn btn-primary">
@@ -15,14 +13,22 @@
 <h4 class="clearfix"></h4>
 <form method="post">
     <table class="table table-bordered">
+        <colgroup>
+            <col width="13%">
+            <col widh="13%">
+            <col width="30%">
+            <col width="4%">
+            <col width="20%">
+            <col width="20%">
+        </colgroup>
         <thead>
             <tr>
-                <th width="13%">Bắt đầu</th>
-                <th width="13%">Kết thúc</th>
-                <th width="30%">Chủ đề</th>
-                <th width="4%" class="center"><i class="fa fa-signal"></i></th>
-                <th width="20%">Đơn vị chủ trì</th>
-                <th width="20%">Hành động</th>
+                <th >Bắt đầu</th>
+                <th >Kết thúc</th>
+                <th >Chủ đề</th>
+                <th class="center"><i class="fa fa-signal"></i></th>
+                <th >Đơn vị chủ trì</th>
+                <th>Hành động</th>
             </tr>
         </thead>
         <tbody>
@@ -42,16 +48,17 @@
                 $online = is_conference_started($conf['confroom_id']);
                 $confroom_id = explode('(', $conf['confroom_id']);
                 $confroom_id = $confroom_id[0];
+                $line_through = $conf['is_deleted'] ? 'line-through' : '';
                 ?>
-                <tr>
+                <tr class="<?php echo $line_through ?>">
                     <td>
                         <strong><?php echo $start_date->format('d.m.Y') ?></strong> - <?php echo $start_date->format('H:i') ?>
                     </td>
                     <td>
                         <strong><?php echo $end_date->format('d.m.Y') ?></strong> - <?php echo $end_date->format('H:i') ?>
                     </td>
-                    <td>
-                        <?php echo $conf['topic'] ?>
+                    <td title="<?php echo $conf['topic'] ?>">
+                        <?php echo mb_strlen($conf['topic'], 'UTF-8') > 40 ? mb_substr($conf['topic'], 0, 40, 'UTF-8') . '...' : $conf['topic'] ?>
                     </td>
                     <td class="center">
                         <?php if ($online): ?>
@@ -69,33 +76,35 @@
                         <?php echo $conf['owner_name'] ?>
                     </td>
                     <td>
-                        <?php if (!$conf['is_approved']): ?>
-                            <button type="submit" name="btn_approve" value="<?php echo $conf['app_id'] ?>" class="btn btn-primary btn-xs"  title="Duyệt">
-                                <i class="fa fa-check"></i>
-                            </button>
-                        <?php endif ?>
-                        <?php if ($conf['is_approved']): ?>
-                            <button type="submit" name="btn_decline" value="<?php echo $conf['app_id'] ?>" class="btn btn-default btn-xs"  title="Từ chối">
-                                <i class="fa fa-close"></i>
-                            </button>
-                            <?php if ($start_date <= $now && $end_date >= $now): ?>
-                                <a href="<?php echo $join_url ?>" class="btn btn-default btn-xs" title="Tham gia"><i class="fa fa-arrow-circle-right"></i></a>
+                        <?php if (!$conf['is_deleted']): ?>
+                            <?php if (!$conf['is_approved']): ?>
+                                <button type="submit" name="btn_approve" value="<?php echo $conf['app_id'] ?>" class="btn btn-primary btn-xs"  title="Duyệt">
+                                    <i class="fa fa-check"></i>
+                                </button>
+                            <?php endif ?>
+                            <?php if ($conf['is_approved']): ?>
+                                <button type="submit" name="btn_decline" value="<?php echo $conf['app_id'] ?>" class="btn btn-default btn-xs"  title="Từ chối">
+                                    <i class="fa fa-close"></i>
+                                </button>
+                                <?php if ($start_date <= $now && $end_date >= $now): ?>
+                                    <a href="<?php echo $join_url ?>" class="btn btn-default btn-xs" title="Tham gia"><i class="fa fa-arrow-circle-right"></i></a>
+                                <?php else: ?>
+                                    <button type="button" class="btn btn-default btn-xs" title="Tham gia" disabled><i class="fa fa-arrow-circle-right"></i></button>
+                                <?php endif; ?>
                             <?php else: ?>
                                 <button type="button" class="btn btn-default btn-xs" title="Tham gia" disabled><i class="fa fa-arrow-circle-right"></i></button>
                             <?php endif; ?>
-                        <?php else: ?>
-                            <button type="button" class="btn btn-default btn-xs" title="Tham gia" disabled><i class="fa fa-arrow-circle-right"></i></button>
+                            <a href="<?php echo $recording_url ?>" class="btn btn-default btn-xs" title="Recording">
+                                <i class="fa fa-film"></i>
+                            </a>
+                            <a href="<?php echo $edit_url ?>" class="btn btn-default btn-xs" title="Sửa">
+                                <i class="fa fa-pencil-square"></i>
+                            </a>
+                            <button type="button" class="btn btn-default btn-xs" data-app_id="<?php echo $conf['app_id'] ?>"
+                                    data-confroom_id="<?php echo $confroom_id ?>" title="Xóa" onclick="btn_delete_onclick(this)">
+                                <i class="fa fa-trash"></i>
+                            </button>
                         <?php endif; ?>
-                        <a href="<?php echo $recording_url ?>" class="btn btn-default btn-xs" title="Recording">
-                            <i class="fa fa-film"></i>
-                        </a>
-                        <a href="<?php echo $edit_url ?>" class="btn btn-default btn-xs" title="Sửa">
-                            <i class="fa fa-pencil-square"></i>
-                        </a>
-                        <button type="button" class="btn btn-default btn-xs" data-app_id="<?php echo $conf['app_id'] ?>"
-                                data-confroom_id="<?php echo $confroom_id ?>" title="Xóa" onclick="btn_delete_onclick(this)">
-                            <i class="fa fa-trash"></i>
-                        </button>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -135,12 +144,10 @@
         videomost_acc: '<?php echo VIDEOMOST_ADMIN_ACC ?>',
         videmost_pass: '<?php echo VIDEOMOST_ADMIN_PASS ?>',
         site_url: '<?php echo site_url() ?>'
-    };
-</script>
+    };</script>
 <script>
     var proccess_done;
     var $modal = $('#modal-processing');
-
     $('#modal-processing').on('show.bs.modal', function () {
         $('.modal-body', this).html('<i class="fa fa-spinner"></i> Đang xử lý yêu cầu, vui lòng chờ...');
         $('.btn', this).prop('disabled', true);
@@ -149,7 +156,6 @@
             e.preventDefault();
         }
     });
-
     function process_begin() {
         proccess_done = false;
         $('#modal-processing').modal('show');
@@ -172,10 +178,8 @@
             return;
         }
         var confroom_id = $(btn).attr('data-confroom_id');
-
         process_begin();
         stop_conf(confroom_id, success, process_error);
-
         function success() {
             $(btn).removeClass('label-success')
                     .addClass('label-default')
@@ -190,10 +194,8 @@
         }
         var confroom_id = $(btn).attr('data-confroom_id');
         var app_id = $(btn).attr('data-app_id');
-
         process_begin();
         stop_conf(confroom_id, stop_success, process_error);
-
         function stop_success() {
             delete_conf(app_id, function () {
                 window.location.reload();
@@ -214,7 +216,6 @@
 
     function stop_conf(confroom_id, success_callback, error_callback) {
         login_videomost(stop);
-
         function login_videomost(login_success) {
             var login_data = {
                 ajax: 1,
@@ -227,7 +228,7 @@
                 cache: false,
                 type: 'post',
                 data: login_data,
-                url: script_data.videomost_url + 'service/join/',
+                url: script_data.videomost_url + 'join/',
                 success: function () {
                     if (login_success)
                         login_success();
@@ -244,8 +245,7 @@
             $.ajax({
                 type: 'post',
                 cache: false,
-                dataType: 'json',
-                url: script_data.videomost_url + 'service/ext/vmi',
+                url: script_data.videomost_url + 'ext/vmi',
                 data: {id: confroom_id, task: 'stopConference'},
                 success: function (resp) {
                     if (resp.result == 1)

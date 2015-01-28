@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <root>
-
+    <file>
+        <name><![CDATA[conference_exit.php]]></name>
+        <dest><![CDATA[scripts/conference_exit.php]]></dest>
+    </file>
 </root>
