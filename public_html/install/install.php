@@ -24,6 +24,8 @@ $vdm_admin_pass = fetch_array($_POST, 'txt_vdm_admin_pass', 'newtel123');
 
 $sms_url = fetch_array($_POST, 'txt_sms_url', 'javascript:;');
 
+$trick_hd = (int) fetch_array($_POST, 'chk_trick_hd');
+
 if (!empty($_POST))
 {
     if (!file_exists($vdm_root . '/index.php'))
@@ -60,7 +62,8 @@ if (!empty($_POST))
         "{{VIDEOMOST_DIR}}",
         "{{VIDEOMOST_ADMIN_ACC}}",
         "{{VIDEOMOST_ADMIN_PASS}}",
-        "{{SMS_URL}}"
+        "{{SMS_URL}}",
+        "{{VIDEOMOST_TRICK_HD}}"
     );
     $arr_replace = array(
         $db_user,
@@ -69,7 +72,8 @@ if (!empty($_POST))
         $vdm_root,
         $vdm_admin_acc,
         $vdm_admin_pass,
-        $sms_url
+        $sms_url,
+        $trick_hd
     );
     $config = str_replace($arr_search, $arr_replace, $config);
     if (!file_put_contents(BASE_DIR . '/config.php', $config))

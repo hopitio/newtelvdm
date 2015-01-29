@@ -1,7 +1,4 @@
-<?php
-
-
-?>
+<?php ?>
 
 <style>
     label{font-weight: bold;display:block;margin-top: 10px;}
@@ -38,6 +35,12 @@
     <div>
         <label for='txt_sms_url'>SMS URL</label>
         <input type='text' name='txt_sms_url' id='txt_sms_url' value='<?php echo $sms_url ?>' required/>
+    </div>
+    <div>
+        <label>Trick HD</label>
+        <input type="radio" name="chk_trick_hd" value="1" checked/>Bật
+        &nbsp;
+        <input type="radio" name="chk_trick_hd" value="0"/>Tắt
     </div>
     <br>
     <input type='submit' name='btn_submit' value='Đồng ý'/>

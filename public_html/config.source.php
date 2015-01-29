@@ -19,5 +19,9 @@ define('SMS_URL', '{{SMS_URL}}');
 define('VIDEOMOST_ADMIN_ACC', '{{VIDEOMOST_ADMIN_ACC}}');
 define('VIDEOMOST_ADMIN_PASS', '{{VIDEOMOST_ADMIN_PASS}}');
 
+//có trick HD không
+define('VIDEOMOST_TRICK_HD', '{{VIDEOMOST_TRICK_HD}}');
+
+
 date_default_timezone_set('asia/saigon');
 

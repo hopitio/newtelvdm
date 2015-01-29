@@ -20,7 +20,7 @@ else if ($app_id = get_post_var('btn_decline'))
     redirect('/admin/approve', array('page' => $page));
 }
 
-$cond = "1=1";
+$cond = "is_deleted=0";
 if ($search = get_request_var('search'))
 {
     $cond .= " AND (app.topic LIKE '%{$search}%' OR u.c_name LIKE '%{$search}%')";

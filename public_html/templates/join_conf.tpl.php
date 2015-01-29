@@ -20,15 +20,22 @@ $conf_id = $conf_id[0];
             <input type="hidden" name="username" value="<?php echo user()->name ?>"/>
             <input type="hidden" name="remember" value="0"/>
         </form>
-        <iframe id="frm_test_cam" src="<?php echo VIDEOMOST_URL ?>join" style="width: 10px; height: 10px; position: fixed;top: -1000px;"></iframe>
 
-        <script>
-            document.getElementById('frm_test_cam').onload = function () {
-                var frm = this;
-                var contentJQ = frm.contentWindow.$;
-                contentJQ('.diag-dialog span').trigger('click');
+        <?php if (VIDEOMOST_TRICK_HD == '1'): ?>
+            <iframe id="frm_test_cam" src="<?php echo VIDEOMOST_URL ?>join" style="width: 10px; height: 10px; position: fixed;top: -1000px;"></iframe>
+
+            <script>
+                document.getElementById('frm_test_cam').onload = function () {
+                    var frm = this;
+                    var contentJQ = frm.contentWindow.$;
+                    contentJQ('.diag-dialog span').trigger('click');
+                    document.getElementById('frm_join').submit();
+                };
+            </script>
+        <?php else: ?>
+            <script>
                 document.getElementById('frm_join').submit();
-            };
-        </script>
+            </script>
+        <?php endif; ?>
     </body>
 </html>
