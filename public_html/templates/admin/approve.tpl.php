@@ -228,7 +228,7 @@
                 cache: false,
                 type: 'post',
                 data: login_data,
-                url: script_data.videomost_url + 'join/',
+                url: script_data.videomost_url + '/join/',
                 success: function () {
                     if (login_success)
                         login_success();
@@ -245,7 +245,7 @@
             $.ajax({
                 type: 'post',
                 cache: false,
-                url: script_data.videomost_url + 'ext/vmi',
+                url: script_data.videomost_url + '/ext/vmi',
                 data: {id: confroom_id, task: 'stopConference'},
                 success: function (resp) {
                     if (resp.result == 1)
