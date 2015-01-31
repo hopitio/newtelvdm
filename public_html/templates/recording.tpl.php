@@ -1,7 +1,7 @@
 <?php
 $confroom_id = explode('(', $app['confroom_id']);
 $confroom_id = $confroom_id[0];
-$dir = VIDEOMOST_DIR . 'service/files/confs/dump/' . $confroom_id . '/';
+$dir = VIDEOMOST_DIR . 'files/confs/' . $confroom_id . '/';
 $files = array();
 if (is_dir($dir))
 {
@@ -35,7 +35,7 @@ if (is_dir($dir))
             {
                 continue;
             }
-            $url = VIDEOMOST_URL . 'service/files/confs/dump/' . $confroom_id . '/' . $file_name;
+            $url = VIDEOMOST_URL . '/files/confs/' . $confroom_id . '/' . $file_name;
             $unit = 'MB';
             $file_size = round(filesize($file_path) / (1024 * 1024));
             if (!$file_size)
