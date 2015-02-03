@@ -73,8 +73,6 @@
                         Công ty Cổ phần Viễn thông New - Telecom<br>
                         Địa chỉ: Số 8, Láng Hạ, Ba Đình, Hà Nội<br>
                         Điện thoại: 043.772.7766
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        Hotline: 0973.901.982
                         <br>
                         Website: <a href='http://www.newtel.vn'>http://www.newtel.vn</a>
                     </div>
