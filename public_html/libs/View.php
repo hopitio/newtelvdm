@@ -19,7 +19,7 @@ class View
             {
                 $this->add_main_nav('approve', '<i class="fa fa-check-square"></i> Duyệt lịch họp', site_url('/admin/approve'));
             }
-            $this->add_main_nav('schedule', '<i class="fa fa-calendar"></i> Lịch họp', site_url('/index'));
+            $this->add_main_nav('schedule', '<i class="fa fa-calendar"></i> Lịch họp', site_url('/'));
             if (!user()->is_admin)
             {
                 $this->add_main_nav('request', '<i class="fa fa-info"></i> Yêu cầu cuộc họp', site_url('/request'));
