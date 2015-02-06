@@ -39,7 +39,11 @@ if ($_POST)
         {
             redirect('/admin/approve');
         }
-        else
+        else if($goback == 'index')
+		{
+			redirect('/');
+		}
+		else
         {
             redirect($goback);
         }
