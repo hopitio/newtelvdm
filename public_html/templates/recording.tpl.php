@@ -1,7 +1,7 @@
 <?php
 $confroom_id = explode('(', $app['confroom_id']);
 $confroom_id = $confroom_id[0];
-$dir_recording = VIDEOMOST_DIR . 'files/confs/' . $confroom_id . '/';
+$dir_recording = VIDEOMOST_DIR . 'files/confs/dump/' . $confroom_id . '/';
 $files_recording = array();
 if (is_dir($dir_recording))
 {
@@ -41,7 +41,7 @@ if (is_dir($dir_att))
         <?php $idx = 1 ?>
         <?php foreach ($files_att as $file_name): ?>
             <?php
-            $file_path = $dir . $file_name;
+            $file_path = $dir_att . $file_name;
             if (is_dir($file_path))
             {
                 continue;
@@ -85,12 +85,12 @@ if (is_dir($dir_att))
         <?php $idx = 1 ?>
         <?php foreach ($files_recording as $file_name): ?>
             <?php
-            $file_path = $dir . $file_name;
+            $file_path = $dir_recording . $file_name;
             if (is_dir($file_path))
             {
                 continue;
             }
-            $url = VIDEOMOST_URL . '/files/confs/' . $confroom_id . '/' . $file_name;
+            $url = VIDEOMOST_URL . '/files/confs/dump/' . $confroom_id . '/' . $file_name;
             $unit = 'MB';
             $file_size = round(filesize($file_path) / (1024 * 1024));
             if (!$file_size)
