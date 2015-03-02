@@ -1,0 +1,5 @@
+He thong HNTT TP
+Lich moi hop
+Noi dung: {{topic}}
+Thoi gian: {{begin_time}} den {{end_time}} ngay {{begin_date}}
+Chu tri: {{owner_name}}

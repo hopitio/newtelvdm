@@ -37,6 +37,14 @@
         <input type='text' name='txt_sms_url' id='txt_sms_url' value='<?php echo $sms_url ?>' required/>
     </div>
     <div>
+        <label for='txt_sms_user'>SMS user</label>
+        <input type='text' name='txt_sms_user' id='txt_sms_user' value='<?php echo $sms_user ?>' required/>
+    </div>
+    <div>
+        <label for='txt_sms_pass'>SMS pass</label>
+        <input type='text' name='txt_sms_pass' id='txt_sms_pass' value='<?php echo $sms_pass ?>' required/>
+    </div>
+    <div>
         <label>Trick HD</label>
         <input type="radio" name="chk_trick_hd" value="1" checked/>Bật
         &nbsp;

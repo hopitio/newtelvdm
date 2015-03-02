@@ -12,12 +12,18 @@ define('DB_NAME', 'videomost');
 define('SITE_URL', '/' . HOST_SUFFIX . '/');
 
 define('VIDEOMOST_URL', '/service/');
-define('VIDEOMOST_DIR', '{{VIDEOMOST_DIR}}');
-define('SMS_URL', '{{SMS_URL}}');
+define('VIDEOMOST_DIR', '/usr/share/videomost/service/');
+define('SMS_URL', 'http://172.16.10.117:13013/cgi-bin/sendsms');
+define('SMS_USER', 'newtel');
+define('SMS_PASS', 'newtel123');
 
 //tài khoản videomost
-define('VIDEOMOST_ADMIN_ACC', '{{VIDEOMOST_ADMIN_ACC}}');
-define('VIDEOMOST_ADMIN_PASS', '{{VIDEOMOST_ADMIN_PASS}}');
+define('VIDEOMOST_ADMIN_ACC', 'admin');
+define('VIDEOMOST_ADMIN_PASS', 'newtel123');
+
+//có trick HD không
+define('VIDEOMOST_TRICK_HD', '1');
+
 
 date_default_timezone_set('asia/saigon');
 

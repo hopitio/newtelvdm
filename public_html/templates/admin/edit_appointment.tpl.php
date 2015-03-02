@@ -24,7 +24,7 @@
                         <label for="txt_conf_start_date">Bắt đầu<span class="red"> *</span></label>
                         <div class="row">
                             <?php
-                            $begin = DateTimeEx::create($app['startTime'])->addHour(7);
+                            $begin  = DateTimeEx::create($app['startTime'])->addHour(7);
                             ?>
                             <div class="col-sm-6">
                                 <input type="text" name="txt_conf_start_date" id="txt_conf_start_date" class="form-control datepicker" 
@@ -63,14 +63,28 @@
                 <div class="well">
                     <?php for ($i = 0; $i < count($arr_user); $i++): ?>
                         <?php
-                        $user = $arr_user[$i];
-                        $uid = 'a' . uniqid();
-                        $checked = in_array($user['pk_user'], $arr_attendiees) ? 'checked' : '';
+                        $user     = $arr_user[$i];
+                        $uid      = 'a' . uniqid();
+                        $checked  = in_array($user['pk_user'], $arr_attendiees) ? 'checked' : '';
+                        $readonly = $user['pk_user'] == $app['owner_id'] ? 'disabled' : ''
                         ?>
-                        <input type="checkbox" name="chk_user[]" value="<?php echo $user['pk_user'] ?>" id="<?php echo $uid ?>" <?php echo $checked ?>/>
+                        <input type="checkbox" name="chk_user[]" value="<?php echo $user['pk_user'] ?>" 
+                               id="<?php echo $uid ?>" <?php echo $checked ?> class='chk'
+                               <?php echo $readonly ?>
+                               />
                         <label for="<?php echo $uid ?>" class="inline"><?php echo $user['c_name'] ?></label>
                         <br>
                     <?php endfor; ?>
+
+                    <?php if (count($arr_attendiees) > 1): ?>
+                        <div class="help-block">Nhấn vào bên dưới để gửi tin nhắn SMS</div>
+                    <?php else: ?>
+                        <div class="help-block">Bạn cần thêm thành viên rồi nhấn cập nhật trước khi gửi SMS</div>
+                    <?php endif; ?>
+                    <?php $disabled = count($arr_attendiees) <= 1 ? 'disabled' : '' ?>
+                    <button type='button' class='btn btn-primary' id='btn-sms' <?php echo $disabled ?>>
+                        <i class='fa fa-envelope'></i>&nbsp;&nbsp;Gửi SMS
+                    </button>
                 </div>
             </div>
             <?php if (isset($error)): ?>
@@ -82,11 +96,20 @@
         </div>
     </div>
 </form>
+
+<script>
+    var script_data = {
+        sms_url: '<?php echo sms_url($arr_attendiees, $arr_attendiees, $app['app_id']) ?>'
+    };
+</script>
 <script>
     $('#txt_conf_start_date').change(function () {
         $('#txt_conf_end_date').datepicker('setStartDate', $(this).val());
     });
     $('#txt_conf_end_date').change(function () {
         $('#txt_conf_start_date').datepicker('setEndDate', $(this).val());
+    });
+    $('#btn-sms').click(function () {
+        window.location = script_data.sms_url;
     });
 </script>

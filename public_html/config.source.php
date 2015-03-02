@@ -13,7 +13,10 @@ define('SITE_URL', '/' . HOST_SUFFIX . '/');
 
 define('VIDEOMOST_URL', '/service/');
 define('VIDEOMOST_DIR', '{{VIDEOMOST_DIR}}');
+
 define('SMS_URL', '{{SMS_URL}}');
+define('SMS_USER', '{{SMS_USER}}');
+define('SMS_PASS', '{{SMS_PASS}}');
 
 //tài khoản videomost
 define('VIDEOMOST_ADMIN_ACC', '{{VIDEOMOST_ADMIN_ACC}}');

@@ -25,7 +25,7 @@ $(function () {
             format: "dd/mm/yyyy",
             language: 'vi'
         };
-        
+
         if ($this.attr('data-date-start-date')) {
             opts['startDate'] = $this.attr('data-date-start-date');
         }
@@ -42,3 +42,9 @@ $(function () {
 function confirm_delete() {
     return confirm('Bạn chắc chắn muốn xóa?');
 }
+
+//chiều cao tối thiểu = màn hình
+$(function () {
+    var height = $(window).height() - $('#top_nav').outerHeight() - $('.footer').outerHeight() - 60;
+    $('#main-content').animate({'min-height': height});
+});

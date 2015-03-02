@@ -48,7 +48,7 @@
             </div>
         </div><!--top_nav-->
         <div class="container" >
-            <div id='main-content'>
+            <div id='main-content' id="main-content">
                 <?php if ($this->heading): ?>
                     <h2><center><?php echo $this->heading ?></center></h2>
                     <hr>

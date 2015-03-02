@@ -24,15 +24,26 @@ else if (get_post_var('btn_delete'))
 
     //thêm đuôi vào account đã xóa
     $suffix = '__' . uniqid();
-    $sql = "UPDATE nt_user SET c_deleted=1, c_account = CONCAT(C_ACCOUNT, '$suffix') WHERE pk_user IN($arr_delete)";
+    $sql    = "UPDATE nt_user SET c_deleted=1, c_account = CONCAT(C_ACCOUNT, '$suffix') WHERE pk_user IN($arr_delete)";
     $db->Execute($sql);
 
     redirect('/admin/account');
 }
 
-$sql = "SELECT * FROM nt_user WHERE c_deleted=0 AND c_is_admin=0 ORDER BY c_sort";
 
-$arr_user = $db->GetAll($sql);
+$cond   = "c_deleted=0 AND c_is_admin=0";
+$params = array();
+$search = get_post_var('search');
+if ($search)
+{
+    $cond.= " AND (c_name LIKE ? OR c_representer LIKE ? OR c_email LIKE ? OR c_phone_no LIKE ? OR c_account LIKE ?)";
+    $params = array_merge($params, array(
+        "%$search%", "%$search%", "%$search%", "%$search%", "%$search%"
+    ));
+}
+$sql = "SELECT * FROM nt_user WHERE $cond ORDER BY c_sort";
+
+$arr_user = $db->GetAll($sql, $params);
 
 $view = View::get_instance()
         ->set_title('Quản trị tài khoản')

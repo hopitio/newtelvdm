@@ -6,7 +6,8 @@
     </div>
     <div class="pull-right form-inline">
         <input type="hidden" name="page" value="<?php echo (int) get_request_var('page', 1) ?>"/>
-        <input type="text" name="search" value="<?php echo get_request_var('search') ?>" class="form-control" placeholder="chủ đề, chủ trì"/>
+        <input type="text" name="search" value="<?php echo get_request_var('search') ?>" 
+               class="form-control" placeholder="chủ đề, chủ trì"/>
         <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
     </div>
 </form>

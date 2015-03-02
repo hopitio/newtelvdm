@@ -7,7 +7,7 @@
  */
 function escape_string($str)
 {
-    $arr_search = array('&', '<', '>', '"', "'", '/', "\\");
+    $arr_search  = array('&', '<', '>', '"', "'", '/', "\\");
     $arr_replace = array();
     foreach ($arr_search as $v)
     {
@@ -44,7 +44,8 @@ function xpath($simplexml, $xpath, $mode = XPATH_ARRAY, $default = null)
 {
     if ($simplexml == false) //validate
     {
-        switch ($mode) {
+        switch ($mode)
+        {
             case XPATH_ARRAY:
                 return array();
             case XPATH_OBJECT:
@@ -57,7 +58,8 @@ function xpath($simplexml, $xpath, $mode = XPATH_ARRAY, $default = null)
     }
 
     $arr_results = $simplexml->xpath($xpath);
-    switch ($mode) {
+    switch ($mode)
+    {
         case XPATH_ARRAY:
             return $arr_results;
         case XPATH_OBJECT:
@@ -213,9 +215,9 @@ function hash_password($string)
 
 function is_conference_started($confid, $is_stop = false)
 {
-    $db = DB::get_instance();
+    $db  = DB::get_instance();
     $sql = 'SELECT * FROM confroomscontrol WHERE `id`="' . $confid . '"';
-    if ($r = $db->GetRow($sql))
+    if ($r   = $db->GetRow($sql))
     {
         if (empty($r['status']))
             return false;
@@ -229,4 +231,40 @@ function is_conference_started($confid, $is_stop = false)
         return false;
     }
     return false;
+}
+
+function sms_url($arr_user_id, $arr_user_selected, $app_id = null)
+{
+    $request_params = array(
+        'user'   => implode(',', $arr_user_id),
+        'app_id' => $app_id
+    );
+
+    if (!empty($arr_user_selected))
+    {
+        $request_params['selected_user'] = implode(',', $arr_user_selected);
+    }
+
+    return site_url('/sms', $request_params);
+}
+
+/** chuyển tiếng việt có dấu -> khong dau */
+function tieng_viet_khong_dau($str)
+{
+    $str = preg_replace("/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/", "a", $str);
+    $str = preg_replace("/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/", "e", $str);
+    $str = preg_replace("/(ì|í|ị|ỉ|ĩ)/", "i", $str);
+    $str = preg_replace("/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/", "o", $str);
+    $str = preg_replace("/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/", "u", $str);
+    $str = preg_replace("/(ỳ|ý|ỵ|ỷ|ỹ)/", "y", $str);
+    $str = preg_replace("/(đ)/", "d", $str);
+    $str = preg_replace("/(À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ)/", "A", $str);
+    $str = preg_replace("/(È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ)/", "E", $str);
+    $str = preg_replace("/(Ì|Í|Ị|Ỉ|Ĩ)/", "I", $str);
+    $str = preg_replace("/(Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ)/", "O", $str);
+    $str = preg_replace("/(Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ)/", "U", $str);
+    $str = preg_replace("/(Ỳ|Ý|Ỵ|Ỷ|Ỹ)/", "Y", $str);
+    $str = preg_replace("/(Đ)/", "D", $str);
+
+    return $str;
 }

@@ -43,8 +43,8 @@
                     </table>
                 </div>
                 <div class="col-xs-2">
-                    <input type="submit" class="btn btn-default btn-block" name="btn_add" value=">>>"/>
-                    <input type="submit" class="btn btn-default btn-block" name="btn_remove" value="<<<"/>
+                    <input type="submit" class="btn btn-default btn-block" name="btn_add" value=">>>" style="color:blue;"/>
+                    <input type="submit" class="btn btn-default btn-block" name="btn_remove" value="<<<" style="color:blue;"/>
                 </div>
                 <div class="col-xs-5">
                     <table class="table-hover table-bordered table-condensed" style="width: 100%;">
@@ -63,9 +63,9 @@
                                     continue;
                                 }
                                 $i++;
-                                $uid = 'a' . uniqid();
+                                $uid      = 'a' . uniqid();
                                 $disabled = $user['pk_user'] == $appointment['owner_id'] ? 'disabled' : '';
-                                $red = $user['pk_user'] == $appointment['owner_id'] ? 'red' : '';
+                                $red      = $user['pk_user'] == $appointment['owner_id'] ? 'red' : '';
                                 ?>
                                 <tr class="<?php echo $red ?>">
                                     <td class="center">
@@ -95,8 +95,18 @@
 </div>
 <hr>
 <div class="center">
-    <p>Nhấn vào nút bên dưới để gửi SMS thông báo cho toàn bộ khách mời</p>
-    <a href="<?php echo SMS_URL ?>" class="btn btn-primary btn-lg">
-        <i class="fa fa-envelope"></i> Gửi SMS
-    </a>
+    <?php
+    $sms_url = sms_url($arr_attendiees, $arr_attendiees, $appointment['app_id']);
+    ?>
+    <?php if (count($arr_attendiees) > 1): ?>
+        <p>Nhấn vào nút bên dưới để gửi SMS thông báo cho toàn bộ khách mời</p>
+        <a href="<?php echo $sms_url ?>" class="btn btn-primary btn-lg">
+            <i class="fa fa-envelope"></i>&nbsp;&nbsp;&nbsp;Gửi SMS
+        </a>
+    <?php else: ?>
+        <p>Cần mời họp trước khi gửi SMS</p>
+        <button disabled class="btn btn-primary btn-lg">
+            <i class="fa fa-envelope"></i>&nbsp;&nbsp;&nbsp;Gửi SMS
+        </button>
+    <?php endif; ?>
 </div>
