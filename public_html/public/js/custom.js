@@ -48,3 +48,13 @@ $(function () {
     var height = $(window).height() - $('#top_nav').outerHeight() - $('.footer').outerHeight() - 60;
     $('#main-content').animate({'min-height': height});
 });
+
+$(function(){
+	$('form').on('click', '.btn-primary', function(){
+		var $this = $(this);
+		$this.prop('disabled', true);
+		setInterval(function(){
+			$this.prop('disabled', false);
+		}, 300);
+	});
+});
