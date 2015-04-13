@@ -5,6 +5,7 @@ $db = DB::get_instance();
 
 $view_data['app'] = $db->GetRow("SELECT * FROM appointments WHERE app_id=?", array($app_id));
 $attendiees = $db->GetCol("SELECT fk_user FROM nt_attendiees WHERE fk_appointment=?", array($app_id));
+$db->Execute("UPDATE confroomscontrol SET status=1 WHERE id=?", array($view_data['app']['confroom_id']));
 
 if (!user()->is_admin && !in_array(user()->pk_user, $attendiees))
 {
