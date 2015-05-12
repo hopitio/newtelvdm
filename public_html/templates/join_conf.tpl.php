@@ -22,14 +22,19 @@ $conf_id = $conf_id[0];
         </form>
 
         <?php if (VIDEOMOST_TRICK_HD == '1'): ?>
-            <iframe id="frm_test_cam" src="<?php echo VIDEOMOST_URL ?>join" style="width: 10px; height: 10px; position: fixed;top: -1000px;"></iframe>
+            <iframe id="frm_test_cam" src="<?php echo VIDEOMOST_URL ?>join" style="width: 600px; height: 400px; position: fixed;top:-1000px;"></iframe>
 
             <script>
                 document.getElementById('frm_test_cam').onload = function () {
                     var frm = this;
                     var contentJQ = frm.contentWindow.$;
                     contentJQ('.diag-dialog span').trigger('click');
-                    document.getElementById('frm_join').submit();
+					
+					setInterval(function(){
+						if(contentJQ('.cuselText').length){
+							document.getElementById('frm_join').submit();
+						}
+					}, 500);
                 };
             </script>
         <?php else: ?>
