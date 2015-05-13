@@ -75,8 +75,7 @@ label.inline{
     text-align: right;
     font-size: 0.9em;
     background: url('../images/newtel_logo.png') no-repeat;
-    background-position-x: right;
-    background-position-y: 10px;
+    background-position: right 10px;
     background-size: auto 40px;
     padding-top:55px;
 }
@@ -155,4 +154,7 @@ h2,h4{
 }
 .line-through .btn{
     text-decoration:none;
+}
+.well{
+    background: white;
 }

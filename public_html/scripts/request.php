@@ -6,7 +6,7 @@ $db = DB::get_instance();
 if (get_post_var('btn_request_conf'))
 {
     $password = uniqid();
-    $start_date = DateTimeEx::createFrom_dmY_Hi(get_post_var('txt_conf_start_date') . ' ' . get_post_var('txt_conf_start_time'))->addHour(-7);
+    $start_date = DateTimeEx::createFrom_dmY_Hi(get_post_var('txt_conf_start_date') . ' ' . get_post_var('txt_conf_start_time'))->addHour(-8);
     $end_date = DateTimeEx::createFrom_dmY_Hi(get_post_var('txt_conf_end_date') . ' ' . get_post_var('txt_conf_end_time'))->addHour(-7);
     $now = DateTimeEx::create()->addHour(-7);
 
@@ -14,18 +14,20 @@ if (get_post_var('btn_request_conf'))
     {
         $view_data['request_error'] = "Ngày bắt đầu phải trước ngày kết thúc";
     }
-    else if ($start_date <= $now)
+    else if ($start_date->addHour(1) <= $now)
     {
         $view_data['request_error'] = "Thời gian bắt đầu cần phải ở tương lai";
     }
 
     if (!isset($view_data['request_error']))
     {
+        //videomost user id
+        $uid = $db->GetOne("SELECT uid FROM users WHERE login=?", array(user()->account));
         $arr_conf_data = array(
             'confroom_id' => 'conf_' . uniqid() . '(conf.vm)',
             'password'    => $password,
             'topic'       => get_post_var('txt_conf_name'),
-            'uid'         => 1,
+            'uid'         => $uid,
             'startTime'   => $start_date->toIsoString(),
             'finishTime'  => $end_date->toIsoString(),
             'tzone'       => 7,
@@ -49,7 +51,7 @@ if (get_post_var('btn_request_conf'))
             'sip'                => '',
             'sip_proxy'          => '',
             'sip_onlyaudio'      => 0,
-            'show_only_owner'    => 0,
+            'show_only_owner'    => (int) get_post_var('chk_show_only_owner'),
             'translation'        => 1,
             'translation_pass'   => $password,
             'translation_pcount' => 1,

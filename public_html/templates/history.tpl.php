@@ -18,7 +18,7 @@
         <?php endif; ?>
         <?php foreach ($arr_conf as $conf): ?>
             <?php
-            $begin = DateTimeEx::create($conf['startTime'])->addHour(7);
+            $begin = DateTimeEx::create($conf['startTime'])->addHour(8);
             $finish = DateTimeEx::create($conf['finishTime'])->addHour(7);
             $recording_url = site_url('/recording', array('app_id' => $conf['app_id']));
             $line_through = $conf['is_deleted'] ? 'line-through' : '';

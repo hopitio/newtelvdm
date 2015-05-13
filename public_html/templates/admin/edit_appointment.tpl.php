@@ -24,11 +24,11 @@
                         <label for="txt_conf_start_date">Bắt đầu<span class="red"> *</span></label>
                         <div class="row">
                             <?php
-                            $begin  = DateTimeEx::create($app['startTime'])->addHour(7);
+                            $begin = DateTimeEx::create($app['startTime'])->addHour(8);
                             ?>
                             <div class="col-sm-6">
                                 <input type="text" name="txt_conf_start_date" id="txt_conf_start_date" class="form-control datepicker" 
-                                       data-date-start-date="<?php echo date_create()->format('d/m/Y') ?>"
+                                       data-date-start-date="<?php echo date_create()->format('d/m/Y H:i') ?>"
                                        placeholder="ngày" data-rule-required="true" value="<?php echo $begin->format('d/m/Y') ?>"/>
                             </div>
                             <div class="col-sm-6">
@@ -63,9 +63,9 @@
                 <div class="well">
                     <?php for ($i = 0; $i < count($arr_user); $i++): ?>
                         <?php
-                        $user     = $arr_user[$i];
-                        $uid      = 'a' . uniqid();
-                        $checked  = in_array($user['pk_user'], $arr_attendiees) ? 'checked' : '';
+                        $user = $arr_user[$i];
+                        $uid = 'a' . uniqid();
+                        $checked = in_array($user['pk_user'], $arr_attendiees) ? 'checked' : '';
                         $readonly = $user['pk_user'] == $app['owner_id'] ? 'disabled' : ''
                         ?>
                         <input type="checkbox" name="chk_user[]" value="<?php echo $user['pk_user'] ?>" 
@@ -85,6 +85,34 @@
                     <button type='button' class='btn btn-primary' id='btn-sms' <?php echo $disabled ?>>
                         <i class='fa fa-envelope'></i>&nbsp;&nbsp;Gửi SMS
                     </button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Phương thức thảo luận</label>
+                <div class="well">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <?php $checked = $show_only_owner == 0 ? 'checked' : '' ?>
+                            <input type="radio" name="chk_show_only_owner" id="soo0" value="0" <?php echo $checked ?>/>
+                            <label class="inline" for="soo0">Trao đổi tự do</label>
+                        </div>
+                        <div class="col-xs-8 help-block">
+                            Mọi thành viên tham gia có quyền phát biểu.<br>
+                            Người Chủ trì có thể bật/tắt microphone của thành viên bất kỳ.
+                        </div>
+                    </div>
+                </div>
+                <div class="well">
+                    <div class="row">
+                        <div class="col-xs-4">
+                             <?php $checked = $show_only_owner == 1 ? 'checked' : '' ?>
+                            <input type="radio" name="chk_show_only_owner" id="soo1" value="1" <?php echo $checked ?>/>
+                            <label class="inline" for="soo1">Chế độ lần lượt</label>
+                        </div>
+                        <div class="col-xs-8 help-block">
+                            Chỉ Chủ trì, hoặc thành viên được Chủ trì cho phép mới được phát biểu.
+                        </div>
+                    </div>
                 </div>
             </div>
             <?php if (isset($error)): ?>

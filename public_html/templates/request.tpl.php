@@ -39,6 +39,32 @@
                     </div>
                 </div>
             </div>
+            <div class="form-group">
+                <label>Phương thức thảo luận</label>
+                <div class="well">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <input type="radio" name="chk_show_only_owner" id="soo0" value="0" checked/>
+                            <label class="inline" for="soo0">Trao đổi tự do</label>
+                        </div>
+                        <div class="col-xs-8 help-block">
+                            Mọi thành viên tham gia có quyền phát biểu.<br>
+                            Người Chủ trì có thể bật/tắt microphone của thành viên bất kỳ.
+                        </div>
+                    </div>
+                </div>
+                <div class="well">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <input type="radio" name="chk_show_only_owner" id="soo1" value="1"/>
+                            <label class="inline" for="soo1">Chế độ lần lượt</label>
+                        </div>
+                        <div class="col-xs-8 help-block">
+                            Chỉ Chủ trì, hoặc thành viên được Chủ trì cho phép mới được phát biểu.
+                        </div>
+                    </div>
+                </div>
+            </div>
             <?php if (isset($request_error)): ?>
                 <span class="red"><?php echo $request_error ?></span>
             <?php endif; ?>
@@ -65,7 +91,7 @@
         <?php endif; ?>
         <?php foreach ($arr_conf as $conf): ?>
             <?php
-            $start_date = DateTimeEx::create($conf['startTime'])->addHour(7);
+            $start_date = DateTimeEx::create($conf['startTime'])->addHour(8);
             $end_date = DateTimeEx::create($conf['finishTime'])->addHour(7);
             ?>
             <tr>

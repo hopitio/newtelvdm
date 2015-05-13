@@ -21,6 +21,42 @@ $conf_id = $conf_id[0];
             <input type="hidden" name="remember" value="0"/>
         </form>
 
+        <script src="<?php echo site_url('public/js') ?>/jquery-1.10.2.min"></script>
+        <script>
+            var script_data = {
+                account: '<?php echo user()->account ?>',
+                videomost_url: '<?php echo VIDEOMOST_URL ?>'
+            };
+        </script>
+        <script>
+            function join() {
+                //dang xuat roi moi dang nhap
+                $.ajax({
+                    cache: false,
+                    url: script_data.videomost_url + '/logout?auth',
+                    complete: function () {
+                        //dang nhap vs tai khoan vdm
+                        var login_data = {
+                            ajax: 1,
+                            login: script_data.account,
+                            password: 123456,
+                            realmname: '',
+                            rem: 0
+                        };
+                        $.ajax({
+                            cache: false,
+                            type: 'post',
+                            data: login_data,
+                            url: script_data.videomost_url + '/join/',
+                            success: function () {
+                                document.getElementById('frm_join').submit();
+                            }
+                        });
+                    }
+                });
+            }
+        </script>
+
         <?php if (VIDEOMOST_TRICK_HD == '1'): ?>
             <iframe id="frm_test_cam" src="<?php echo VIDEOMOST_URL ?>join" style="width: 600px; height: 400px; position: fixed;top:-1000px;"></iframe>
 
@@ -29,17 +65,18 @@ $conf_id = $conf_id[0];
                     var frm = this;
                     var contentJQ = frm.contentWindow.$;
                     contentJQ('.diag-dialog span').trigger('click');
-					
-					setInterval(function(){
-						if(contentJQ('.cuselText').length){
-							document.getElementById('frm_join').submit();
-						}
-					}, 500);
+
+                    var inv = setInterval(function () {
+                        if (contentJQ('.cuselText').length) {
+                            clearInterval(inv);
+                            join();
+                        }
+                    }, 500);
                 };
             </script>
         <?php else: ?>
             <script>
-                document.getElementById('frm_join').submit();
+                join();
             </script>
         <?php endif; ?>
     </body>

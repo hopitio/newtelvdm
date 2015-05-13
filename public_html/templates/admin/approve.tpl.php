@@ -40,7 +40,7 @@
             <?php endif; ?>
             <?php foreach ($arr_conf as $conf): ?>
                 <?php
-                $start_date = DateTimeEx::create($conf['startTime'])->addHour(7);
+                $start_date = DateTimeEx::create($conf['startTime'])->addHour(8);
                 $end_date = DateTimeEx::create($conf['finishTime'])->addHour(7);
                 $now = DateTimeEx::create();
                 $join_url = site_url('/join_conf', array('app_id' => $conf['app_id']));

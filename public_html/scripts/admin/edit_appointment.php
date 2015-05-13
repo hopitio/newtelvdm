@@ -6,9 +6,10 @@ $db = DB::get_instance();
 if (get_post_var('btn_submit'))
 {
     $app_id = get_post_var('hdn_app_id');
-    $start_date = DateTimeEx::createFrom_dmY_Hi(get_post_var('txt_conf_start_date') . ' ' . get_post_var('txt_conf_start_time'))->addHour(-7);
+    $start_date = DateTimeEx::createFrom_dmY_Hi(get_post_var('txt_conf_start_date') . ' ' . get_post_var('txt_conf_start_time'))->addHour(-8);
     $end_date = DateTimeEx::createFrom_dmY_Hi(get_post_var('txt_conf_end_date') . ' ' . get_post_var('txt_conf_end_time'))->addHour(-7);
     $topic = get_post_var('txt_conf_name');
+    $show_only_owner = (int) get_post_var('chk_show_only_owner');
 
     if ($start_date >= $end_date)
     {
@@ -29,6 +30,7 @@ if (get_post_var('btn_submit'))
         {
             //update
             $db->update('appointments', $update_data, 'app_id=?', array($app_id));
+            $db->update('appointments_options', array('show_only_owner' => $show_only_owner), 'app_id=?', array($app_id));
         }
         else
         {
@@ -58,7 +60,7 @@ if (get_post_var('btn_submit'))
                 'sip'                => '',
                 'sip_proxy'          => '',
                 'sip_onlyaudio'      => 0,
-                'show_only_owner'    => 0,
+                'show_only_owner'    => $show_only_owner,
                 'translation'        => 1,
                 'translation_pass'   => $password,
                 'translation_pcount' => 1,
@@ -66,6 +68,7 @@ if (get_post_var('btn_submit'))
             );
             $db->insert('appointments_options', $arr_opt_data);
         }
+
 
         //attendiees
         $owner_id = get_post_var('sel_conf_owner');
@@ -84,6 +87,12 @@ if (get_post_var('btn_submit'))
             ));
         }
 
+        //update appointments uid
+        //tra cuu videomost user
+        $account = $db->GetOne("SELECT c_account FROM nt_user WHERE pk_user=?", array($owner_id));
+        $uid = $db->GetOne("SELECT uid FROM users WHERE login=?", array($account));
+        $db->update('appointments', array('uid' => $uid), 'app_id=?', array($app_id));
+
         redirect('/admin/approve');
     }
 }
@@ -94,15 +103,17 @@ if ($app_id)
 {
     $view_data['app'] = $db->GetRow("SELECT * FROM appointments WHERE app_id=?", array($app_id));
     $view_data['arr_attendiees'] = $db->GetCol("SELECT fk_user FROM nt_attendiees WHERE fk_appointment=?", array($app_id));
+    $view_data['show_only_owner'] = (int) $db->GetOne("SELECT show_only_owner FROM appointments_options WHERE app_id=?", array($app_id));
 }
 else
 {
     $view_data['arr_attendiees'] = array();
     $view_data['app'] = array(
         'app_id'     => 0,
-        'startTime'  => DateTimeEx::create()->addHour(-7)->toIsoString(),
+        'startTime'  => DateTimeEx::create()->addHour(-8)->toIsoString(),
         'finishTime' => DateTimeEx::create()->addHour(-7)->toIsoString()
     );
+    $view_data['show_only_owner'] = 0;
 }
 
 View::get_instance()
