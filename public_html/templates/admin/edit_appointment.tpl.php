@@ -28,7 +28,7 @@
                             ?>
                             <div class="col-sm-6">
                                 <input type="text" name="txt_conf_start_date" id="txt_conf_start_date" class="form-control datepicker" 
-                                       data-date-start-date="<?php echo date_create()->format('d/m/Y H:i') ?>"
+                                       data-date-start-date="<?php echo date_create()->format('d/m/Y') ?>"
                                        placeholder="ngày" data-rule-required="true" value="<?php echo $begin->format('d/m/Y') ?>"/>
                             </div>
                             <div class="col-sm-6">
