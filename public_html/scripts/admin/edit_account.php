@@ -52,6 +52,7 @@ if (!empty($_POST))
             $max_sort = (int) $db->GetOne("SELECT MAX(c_sort) FROM nt_user");
             $update_data['c_sort'] = $max_sort + 1;
             $user_id = $db->insert('nt_user', $update_data);
+            sync_vdm_user($account);
         }
         redirect('/admin/account');
     }

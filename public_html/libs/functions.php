@@ -7,7 +7,7 @@
  */
 function escape_string($str)
 {
-    $arr_search  = array('&', '<', '>', '"', "'", '/', "\\");
+    $arr_search = array('&', '<', '>', '"', "'", '/', "\\");
     $arr_replace = array();
     foreach ($arr_search as $v)
     {
@@ -215,9 +215,9 @@ function hash_password($string)
 
 function is_conference_started($confid, $is_stop = false)
 {
-    $db  = DB::get_instance();
+    $db = DB::get_instance();
     $sql = 'SELECT * FROM confroomscontrol WHERE `id`="' . $confid . '"';
-    if ($r   = $db->GetRow($sql))
+    if ($r = $db->GetRow($sql))
     {
         if (empty($r['status']))
             return false;
@@ -267,4 +267,48 @@ function tieng_viet_khong_dau($str)
     $str = preg_replace("/(Đ)/", "D", $str);
 
     return $str;
+}
+
+function sync_vdm_user($account)
+{
+    $db = DB::get_instance();
+    $arr_account = $db->GetRow("SELECT * FROM nt_user WHERE c_account=?", array($account));
+    $vdm_user = $db->GetOne("SELECT uid FROM users WHERE login=?", array($account));
+
+    if (!$vdm_user) //nếu user videmost chưa tồn tại
+    {
+
+        //tim tariffs auto
+        $policy_id = $db->GetOne("SELECT policy_id FROM tariffs WHERE policy_name=?", array('auto'));
+        //tao account
+        if ($policy_id)
+        {
+            $account_id = $db->GetOne("SELECT MAX(account_id) + 1 FROM accounts");
+            $db->insert('accounts', array(
+                'account_id' => $account_id,
+                'policy_id'  => $policy_id,
+                'created_dt' => DateTimeEx::create()->toIsoString()
+            ));
+        }
+
+        $db->insert('users', array(
+            'login'                => $account,
+            'realmname'            => '',
+            'account_id'           => $account_id,
+            'email'                => $arr_account['c_email'],
+            'password'             => md5('123456'),
+            'lastname'             => $arr_account['c_name'],
+            'createDate'           => DateTimeEx::create()->toIsoString(),
+            'modificationDate'     => DateTimeEx::create()->toIsoString(),
+            'passmodificationDate' => DateTimeEx::create()->toIsoString(),
+            'blocked'              => 0,
+            'approved'             => 1,
+            'referer'              => 'registration',
+            'xmpp_created'         => 0,
+            'status'               => 0,
+            'timezone'             => 7,
+            'lang'                 => 'en',
+            'loglevel'             => 0
+        ));
+    }
 }
