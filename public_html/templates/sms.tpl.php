@@ -5,7 +5,7 @@ if ($app)
     $template_dir = __DIR__ . '/sms';
 
     $begin = DateTimeEx::create($app['startTime'])->addHour(8);
-    $end   = DateTimeEx::create($app['finishTime'])->addHour(7);
+    $end = DateTimeEx::create($app['finishTime'])->addHour(7);
 
     $arr_template_data = array(
         "{{topic}}"      => tieng_viet_khong_dau($app['topic']),
@@ -22,7 +22,7 @@ if ($app)
         {
             continue;
         }
-        $file                = $template_dir . '/' . $item;
+        $file = $template_dir . '/' . $item;
         $arr_template[$item] = file_get_contents($file);
         $arr_template[$item] = strtr($arr_template[$item], $arr_template_data);
     }
@@ -70,9 +70,9 @@ if ($app)
                 <br><br>
                 <?php foreach ($arr_user as $user): ?>
                     <?php
-                    $uid      = 'a' . uniqid();
+                    $uid = 'a' . uniqid();
                     $disabled = $user['pk_user'] == user()->pk_user ? 'disabled' : '';
-                    $checked  = in_array($user['pk_user'], $arr_selected) && !$disabled ? 'checked' : '';
+                    $checked = in_array($user['pk_user'], $arr_selected) && !$disabled ? 'checked' : '';
                     ?>
                     <input type="checkbox" class="chk" id="<?php echo $uid ?>"
                            value="<?php echo $user['c_phone_no'] ?>"
@@ -85,20 +85,11 @@ if ($app)
                     <br>
                 <?php endforeach; ?>
             </div>
-            <input type="button" class="btn btn-primary " id="send-message" value="Gửi tin nhắn"/>
+            <input type="submit" class="btn btn-primary " id="send-message" value="Gửi tin nhắn"/>
             <input type="button" class="btn btn-default " onclick="history.go(-1)" value="Quay lại"/>
         </form>
     </div>
 </div>
-
-<form id="frm-post" method="get" action="<?php echo SMS_URL ?>" target="i_post">
-    <input type="hidden" name="text" id="text"/>
-    <input type="hidden" name="to" id="to"/>
-
-    <input type="hidden" name="username" value="<?php echo SMS_USER ?>"/>
-    <input type="hidden" name="password" value="<?php echo SMS_PASS ?>"/>
-</form>
-<iframe id="i_post" name="i_post" ></iframe>
 
 <script>
     $(function () {
@@ -109,6 +100,7 @@ if ($app)
         $('#check-all').click(function () {
             $('.chk:enabled').prop('checked', true).trigger('change');
         });
+        
         $('#uncheck-all').click(function () {
             $('.chk').prop('checked', false).trigger('change');
         });
@@ -116,29 +108,6 @@ if ($app)
         $('.chk').change(function () {
             $('#count-checked').html("(" + $('.chk:checked').length + ")");
         }).trigger('change');
-
-        $('#i_post').load(function () {
-            alert('Gửi thành công');
-            window.location.reload();
-        });
-
-        $('#send-message').click(function () {
-            if (!$('#frm-main').valid()) {
-                return;
-            }
-
-            var to = '';
-
-            $('.chk:checked').each(function () {
-                var phone = $(this).attr('value');
-                to += to ? ' ' + phone : phone;
-            });
-
-            $('#text').val($('#txt_msg').val());
-            $('#to').val(to);
-            $('#i_post').attr('src', '');
-            $('#frm-post').submit();
-        });
 
         $('#sel_template').change(function () {
             var val = $(this).val();
