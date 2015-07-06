@@ -163,7 +163,7 @@ function user()
  */
 function redirect($uri, $params = array())
 {
-    $url = site_url($uri, $params);
+    $url = trim(site_url($uri, $params), '/');
     header('Location: ' . $url);
     exit;
 }

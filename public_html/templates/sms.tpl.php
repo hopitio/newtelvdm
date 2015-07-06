@@ -38,7 +38,7 @@ if ($app)
 
 <div class="row">
     <div class="col-xs-6 col-xs-offset-3">
-        <form class="form-validate" id="frm-main">
+        <form class="form-validate" id="frm-main" method="post">
             <?php if ($app): ?>
                 <div class="form-group">
                     <label for="sel_template">Chọn mẫu tin nhắn</label>
@@ -76,6 +76,7 @@ if ($app)
                     ?>
                     <input type="checkbox" class="chk" id="<?php echo $uid ?>"
                            value="<?php echo $user['c_phone_no'] ?>"
+                           name="phone[]"
                            <?php echo $disabled ?>
                            <?php echo $checked ?>
                            />
@@ -100,7 +101,7 @@ if ($app)
         $('#check-all').click(function () {
             $('.chk:enabled').prop('checked', true).trigger('change');
         });
-        
+
         $('#uncheck-all').click(function () {
             $('.chk').prop('checked', false).trigger('change');
         });
