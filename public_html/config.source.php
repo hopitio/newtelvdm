@@ -17,6 +17,8 @@ define('VIDEOMOST_DIR', '{{VIDEOMOST_DIR}}');
 define('SMS_URL', '{{SMS_URL}}');
 define('SMS_USER', '{{SMS_USER}}');
 define('SMS_PASS', '{{SMS_PASS}}');
+define('SMS_ADMIN', '01666244670');
+define('SMS_HEADER', 'He thong HNTT TP');
 
 //tài khoản videomost
 define('VIDEOMOST_ADMIN_ACC', '{{VIDEOMOST_ADMIN_ACC}}');

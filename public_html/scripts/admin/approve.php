@@ -11,12 +11,35 @@ $page = (int) get_request_var('page', 1);
 
 if ($app_id = get_post_var('btn_approve'))
 {
+    //app
+    $app = $db->GetRow("SELECT * FROM appointments WHERE app_id=?", array($app_id));
+    //sdt
+    $phone = $db->GetOne("SELECT c_phone_no FROM nt_user WHERE pk_user=?", array($app['owner_id']));
     $db->update('appointments', array('is_approved' => 1), 'app_id=?', array($app_id));
+
+    //msg
+    $msg = SMS_HEADER . "\n" . tieng_viet_khong_dau($app['topic']) . " da duoc duyet";
+    send_sms(array($phone), $msg);
+
     redirect('/admin/approve', array('page' => $page));
 }
 else if ($app_id = get_post_var('btn_decline'))
 {
-    $db->update('appointments', array('is_approved' => 0), 'app_id=?', array($app_id));
+    $data = array(
+        'is_approved'    => -1,
+        'decline_reason' => get_post_var('txt_reason')
+    );
+    //app
+    $app = $db->GetRow("SELECT * FROM appointments WHERE app_id=?", array($app_id));
+    //sdt
+    $phone = $db->GetOne("SELECT c_phone_no FROM nt_user WHERE pk_user=?", array($app['owner_id']));
+
+    $db->update('appointments', $data, 'app_id=?', array($app_id));
+
+    //msg
+    $msg = SMS_HEADER . "\n" . tieng_viet_khong_dau($app['topic']) . " da bi tu choi voi ly do: " . tieng_viet_khong_dau($app['decline_reason']);
+    send_sms(array($phone), $msg);
+
     redirect('/admin/approve', array('page' => $page));
 }
 

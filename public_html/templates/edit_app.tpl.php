@@ -1,4 +1,4 @@
-<form class="form-validate" method="post" id="frm-main">
+<form class="form-validate" method="post" id="frm-main" ng-app="myApp" ng-controller="editCtrl">
     <input type="hidden" name="hdn_app_id" value="<?php echo $app['app_id'] ?>"/>
     <div class="row">
         <div class="col-sm-6 col-sm-offset-3">
@@ -58,35 +58,7 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group">
-                <label>Danh sách tham gia</label>
-                <div class="well">
-                    <?php for ($i = 0; $i < count($arr_user); $i++): ?>
-                        <?php
-                        $user = $arr_user[$i];
-                        $uid = 'a' . uniqid();
-                        $checked = in_array($user['pk_user'], $arr_attendiees) ? 'checked' : '';
-                        $readonly = $user['pk_user'] == $app['owner_id'] ? 'disabled' : ''
-                        ?>
-                        <input type="checkbox" name="chk_user[]" value="<?php echo $user['pk_user'] ?>" 
-                               id="<?php echo $uid ?>" <?php echo $checked ?> class='chk'
-                               <?php echo $readonly ?>
-                               />
-                        <label for="<?php echo $uid ?>" class="inline"><?php echo $user['c_name'] ?></label>
-                        <br>
-                    <?php endfor; ?>
 
-                    <?php if (count($arr_attendiees) > 1): ?>
-                        <div class="help-block">Nhấn vào bên dưới để gửi tin nhắn SMS</div>
-                    <?php else: ?>
-                        <div class="help-block">Bạn cần thêm thành viên rồi nhấn cập nhật trước khi gửi SMS</div>
-                    <?php endif; ?>
-                    <?php $disabled = count($arr_attendiees) <= 1 ? 'disabled' : '' ?>
-                    <button type='button' class='btn btn-primary' id='btn-sms' <?php echo $disabled ?>>
-                        <i class='fa fa-envelope'></i>&nbsp;&nbsp;Gửi SMS
-                    </button>
-                </div>
-            </div>
             <div class="form-group">
                 <label>Phương thức thảo luận</label>
                 <div class="well">
@@ -115,50 +87,33 @@
                     </div>
                 </div>
             </div>
+            <div class="form-group">
+                <label>Danh sách tham gia <span ng-cloak>({{check_count}})</span></label>
+                <input type="text" class="form-control input-block" ng-model="search" placeholder="tìm theo tên"/>
+                <h4></h4>
+                <div class="well">
+                    <a href="javascript:;" class="btn btn-default btn-sm" ng-click="check(true)">Chọn tất cả</a>
+                    <a href="javascript:;"  class="btn btn-default btn-sm" ng-click="check(false)">Bỏ chọn tất cả</a>
+                    <h4></h4>
+                    <div ng-repeat="user in users| filter: search" ng-cloak>
+                        <label class="inline">
+                            <input type="checkbox" name="chk_user[]" class="chk" value="{{user.pk_user}}" ng-model="items[$index]">
+                            {{user.c_name}}
+                        </label>
+                    </div>
+                </div>
+            </div>
             <?php if (isset($error)): ?>
                 <span class="red"><?php echo $error ?></span>
                 <br>
             <?php endif; ?>
-<!--<input type="submit" name="btn_submit" value="Cập nhật" class="btn btn-primary"/>-->
-            <button type="submit" name="btn_approve" value="<?php echo $app['app_id'] ?>" class="btn btn-primary"
-                    formaction="<?php echo site_url('admin/approve') ?>">
-                Duyệt
-            </button>
-            <button type="button" class="btn btn-danger"  data-toggle="modal" data-target="#modal-decline">
-                Từ chối
-            </button>
-            <a href="<?php echo site_url('/admin/approve') ?>" class="btn btn-default">Quay về danh sách</a>
+            <input type="submit" class="btn btn-primary" value="Cập nhật" ng-click="save()"/>
+            <a href="<?php echo site_url() ?>" class="btn btn-default">Quay về danh sách</a>
         </div>
     </div>
-    
 </form>
 
 
-<form class="form-validate" method="post" action="<?php echo site_url('admin/approve') ?>">
-    <div class="modal" id="modal-decline">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Từ chối</h4>
-                </div>
-                <div class="modal-body">
-                    <textarea name="txt_reason" class="form-control input-block" rows="5" placeholder="Nêu lý do" required></textarea> 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
-                    <button type="submit" name="btn_decline" value="<?php echo $app['app_id'] ?>" class="btn btn-danger">Từ chối</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-</form>
-
-<script>
-    var script_data = {
-        sms_url: '<?php echo sms_url($arr_attendiees, $arr_attendiees, $app['app_id']) ?>'
-    };
-</script>
 <script>
     $('#txt_conf_start_date').change(function () {
         $('#txt_conf_end_date').datepicker('setStartDate', $(this).val());
@@ -166,10 +121,60 @@
     $('#txt_conf_end_date').change(function () {
         $('#txt_conf_start_date').datepicker('setEndDate', $(this).val());
     });
-    $('#btn-sms').click(function () {
-        window.location = script_data.sms_url;
-    });
-    $('input, select', '#frm-main').each(function () {
-        $(this).attr('disabled', 'disabled');
+</script>
+
+<script src="<?php echo site_url() ?>public/js/angular.min.js"></script>
+<script>
+    var users = <?php echo json_encode($arr_user) ?>;
+    var attendiees = <?php echo json_encode($arr_attendiees) ?>;
+</script>
+<script>
+    angular.module('myApp', []).controller('editCtrl', function ($scope) {
+        $scope.users = users;
+        $scope.items = {};
+        $scope.check_count = 0;
+
+        $scope.$watchCollection('items', function () {
+            $scope.check_count = 0;
+            for (var i in $scope.items) {
+                if ($scope.items[i] == true)
+                    $scope.check_count++;
+            }
+        });
+
+        for (var i in $scope.users) {
+            var user = $scope.users[i];
+            for (var i in attendiees) {
+                var id = attendiees[i];
+                if (user.pk_user == id) {
+                    console.log(i);
+                    $scope.items[i] = true;
+                    break;
+                }
+            }
+
+        }
+
+        for (var i in attendiees) {
+            var id = attendiees[i];
+
+        }
+
+        $scope.check = function (checked) {
+            setTimeout(function () {
+                $scope.$apply(function () {
+                    $('.chk').each(function (index) {
+                        $scope.items[index] = checked;
+                    });
+                });
+            });
+
+        };
+
+        $scope.save = function () {
+            if ($('#frm-main').valid()) {
+                $('#frm-main').submit();
+            }
+        };
     });
 </script>

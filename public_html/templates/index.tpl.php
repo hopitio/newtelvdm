@@ -25,7 +25,7 @@
             $end_date = DateTimeEx::create($conf['finishTime'])->addHour(7);
             $now = DateTimeEx::create();
             $join_url = site_url('/join_conf', array('app_id' => $conf['app_id']));
-            $manage_url = site_url('/attendiees', array('app_id' => $conf['app_id']));
+            $manage_url = site_url('/edit_app', array('app_id' => $conf['app_id']));
             $record_url = site_url('/recording', array('app_id' => $conf['app_id']));
             ?>
             <tr>
@@ -60,7 +60,7 @@
                         </button>
                     <?php endif; ?>
                     <a href="<?php echo $manage_url ?>" class="btn btn-default btn-xs">
-                        <i class="fa fa-group"></i> Danh sách khách mời
+                        <i class="fa fa-edit"></i> Sửa cuộc họp
                     </a>
                     <a href="<?php echo $record_url ?>" class="btn btn-default btn-xs" title="Recording">
                         <i class="fa fa-film"></i>

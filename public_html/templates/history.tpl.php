@@ -32,6 +32,16 @@
                 </td>
                 <td title="<?php echo $conf['topic'] ?>">
                     <?php echo mb_strlen($conf['topic'], 'UTF-8') > 50 ? mb_substr($conf['topic'], 0, 50, 'UTF-8') . '...' : $conf['topic'] ?>
+                    <?php
+                    if ($conf['is_approved'] == -1)
+                    {
+                        echo '<br><span style="color: red">Lý do từ chối: ' . $conf['decline_reason'] . '</span>';
+                    }
+                    else if ($conf['is_approved'] == 0)
+                    {
+                        echo '<br><span style="color: red">Quá hạn duyệt</span>';
+                    }
+                    ?>
                 </td>
                 <td><?php echo $conf['owner_name'] ?></td>
                 <td>

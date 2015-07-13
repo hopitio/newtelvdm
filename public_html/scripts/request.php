@@ -60,6 +60,28 @@ if (get_post_var('btn_request_conf'))
         $db->insert('appointments_options', $arr_opt_data);
         $db->insert('nt_attendiees', array('fk_user' => user()->pk_user, 'fk_appointment' => $app_id));
 
+        //attendiees
+        $owner_id = user()->pk_user;
+        $arr_attendiees = get_post_var('chk_user', array());
+        if (!in_array($owner_id, $arr_attendiees))
+        {
+            $arr_attendiees[] = $owner_id;
+        }
+
+        $db->delete('nt_attendiees', "fk_appointment=?", array($app_id));
+        foreach ($arr_attendiees as $user_id)
+        {
+            $db->insert('nt_attendiees', array(
+                'fk_appointment' => $app_id,
+                'fk_user'        => $user_id
+            ));
+        }
+
+        //gui sms cho admin
+        $msg = "He thong HNTT TP\n" .
+                tieng_viet_khong_dau(user()->name) . ' yeu cau cuoc hop: ' . tieng_viet_khong_dau(get_post_var('txt_conf_name'));
+        send_sms(SMS_ADMIN, $msg);
+
         redirect('/request_result');
     }
 }
@@ -68,15 +90,17 @@ $sql = "
     SELECT * FROM appointments app
     WHERE app.owner_id=?
     AND app.is_deleted=0
-    AND app.is_approved=0
+    AND app.is_approved<>1
+    AND app.startTime >= NOW()
     ORDER BY app.startTime
 ";
 $view_data['arr_conf'] = $db->GetAll($sql, array(user()->pk_user));
+$view_data['arr_user'] = $db->GetAll("SELECT * FROM nt_user WHERE c_deleted=0 ORDER BY c_sort");
 
 View::get_instance()
         ->set_active_main_nav('request')
         ->set_title('Yêu cầu cuộc họp')
-        ->set_heading('Yêu cầu cuộc họp')
+        ->set_heading('Yêu cầu chờ duyệt')
         ->set_data($view_data)
         ->render('request');
 

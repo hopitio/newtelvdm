@@ -1,8 +1,9 @@
+
 <form>
     <div class="pull-left">
-        <a href="<?php echo site_url('/admin/edit_appointment', array('app_id' => 0)) ?>" data-toggle="modal" class="btn btn-primary">
+<!--        <a href="<?php echo site_url('/admin/edit_appointment', array('app_id' => 0)) ?>" data-toggle="modal" class="btn btn-primary">
             <i class="fa fa-plus"></i> Thêm mới
-        </a>
+        </a>-->
     </div>
     <div class="pull-right form-inline">
         <input type="hidden" name="page" value="<?php echo (int) get_request_var('page', 1) ?>"/>
@@ -19,8 +20,9 @@
             <col widh="13%">
             <col width="30%">
             <col width="4%">
+            <col width="4%">
             <col width="20%">
-            <col width="20%">
+            <col width="16%">
         </colgroup>
         <thead>
             <tr>
@@ -28,6 +30,7 @@
                 <th >Kết thúc</th>
                 <th >Chủ đề</th>
                 <th class="center"><i class="fa fa-signal"></i></th>
+                <th class="center"><i class="fa fa-check-circle"></i></th>
                 <th >Đơn vị chủ trì</th>
                 <th>Hành động</th>
             </tr>
@@ -73,21 +76,42 @@
                             </span>
                         <?php endif; ?>
                     </td>
+                    <td class="center">
+                        <?php
+                        switch ($conf['is_approved'])
+                        {
+                            case "1":
+                                echo '<span class="label label-success" title="Đã duyệt"><i class="fa fa-check"></i></span>';
+                                break;
+                            case "0":
+                                echo '<span class="label label-primary" title="Chưa duyệt"><i class="fa fa-question"></i></span>';
+                                break;
+                            case "-1":
+                                echo '<span class="label label-default" title="'.$conf['decline_reason'].'"><i class="fa fa-times"></i></span>';
+                                break;
+                        }
+                        ?>
+                    </td>
                     <td>
                         <?php echo $conf['owner_name'] ?>
                     </td>
                     <td>
                         <?php if (!$conf['is_deleted']): ?>
-                            <?php if (!$conf['is_approved']): ?>
-                                <button type="submit" name="btn_approve" value="<?php echo $conf['app_id'] ?>" class="btn btn-primary btn-xs"  title="Duyệt">
+                            <?php if ($conf['is_approved'] < 1): ?>
+                                                                                                    <!--                                <button type="submit" name="btn_approve" value="<?php echo $conf['app_id'] ?>" class="btn btn-primary btn-xs"  title="Duyệt">
+                                                                                                                                    <i class="fa fa-check"></i>
+                                                                                                                                </button>-->
+                                <a href="<?php echo $edit_url ?>" class="btn btn-primary btn-xs"  title="Duyệt">
                                     <i class="fa fa-check"></i>
-                                </button>
+                                </a>
                             <?php endif ?>
-                            <?php if ($conf['is_approved']): ?>
-                                <button type="submit" name="btn_decline" value="<?php echo $conf['app_id'] ?>" class="btn btn-default btn-xs"  title="Từ chối">
+                            <?php if ($conf['is_approved'] == 1): ?>
+                                <button
+                                    type="button" value="<?php echo $conf['app_id'] ?>" class="btn btn-default btn-xs"  
+                                    title="Từ chối" onclick="btn_decline_onclick(<?php echo $conf['app_id'] ?>)">
                                     <i class="fa fa-close"></i>
                                 </button>
-                                <?php if ($start_date <= $now && $end_date >= $now): ?>
+                                <?php if ($start_date <= $now && $end_date >= $now && $conf['is_approved'] == 1): ?>
                                     <a href="<?php echo $join_url ?>" class="btn btn-default btn-xs" title="Tham gia"><i class="fa fa-arrow-circle-right"></i></a>
                                 <?php else: ?>
                                     <button type="button" class="btn btn-default btn-xs" title="Tham gia" disabled><i class="fa fa-arrow-circle-right"></i></button>
@@ -97,9 +121,6 @@
                             <?php endif; ?>
                             <a href="<?php echo $recording_url ?>" class="btn btn-default btn-xs" title="Recording">
                                 <i class="fa fa-film"></i>
-                            </a>
-                            <a href="<?php echo $edit_url ?>" class="btn btn-default btn-xs" title="Sửa">
-                                <i class="fa fa-pencil-square"></i>
                             </a>
                             <button type="button" class="btn btn-default btn-xs" data-app_id="<?php echo $conf['app_id'] ?>"
                                     data-confroom_id="<?php echo $confroom_id ?>" title="Xóa" onclick="btn_delete_onclick(this)">
@@ -138,6 +159,26 @@
         </div>
     </div>
 </div>
+
+<form method="post" class="form-validate">
+    <div class="modal" id="modal-decline">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Từ chối</h4>
+                </div>
+                <div class="modal-body">
+                    <textarea name="txt_reason" class="form-control input-block" rows="5" placeholder="Nêu lý do" required></textarea> 
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+                    <button type="submit" name="btn_decline" class="btn btn-danger">Từ chối</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</form>
 
 <script>
     var script_data = {
@@ -187,6 +228,11 @@
                     .attr('title', 'Chưa khởi động');
             process_done();
         }
+    }
+
+    function btn_decline_onclick(app_id) {
+        $('[name=btn_decline]', '#modal-decline').val(app_id);
+        $('#modal-decline').modal('show');
     }
 
     function btn_delete_onclick(btn) {

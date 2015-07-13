@@ -2,6 +2,9 @@ body{
     padding-top:0;
     background: #F8F8F8;
 }
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display: none !important;
+}
 #main-content{
     min-height: 300px;
 }
@@ -154,4 +157,10 @@ h2,h4{
 }
 .well{
     background: white;
+}
+.green{
+    color: green;
+}
+.red{
+    color: red;
 }

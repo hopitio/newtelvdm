@@ -6,16 +6,7 @@ if ($_POST)
 {
     $msg = $_POST['txt_msg'];
     $phones = $_POST['phone'];
-    if (!is_array($phones))
-    {
-        $phones = array();
-    }
-    $url = SMS_URL;
-    $url .= '?text=' . urlencode($msg);
-    $url .= '&username=' . SMS_USER;
-    $url .= '&password=' . SMS_PASS;
-    $url .= '&to=' . urlencode(implode(' ', $phones));
-    file_get_contents($url);
+    send_sms($phones, $msg);
     header('location: ' . $_SERVER['REQUEST_URI']);
 }
 

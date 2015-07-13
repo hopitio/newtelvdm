@@ -61,6 +61,7 @@ class install_lib
         $db->Execute("CREATE UNIQUE INDEX unq_account ON nt_user(c_account)");
         $db->Execute("ALTER TABLE appointments ADD is_approved TINYINT DEFAULT 0");
         $db->Execute("ALTER TABLE appointments ADD owner_id INT DEFAULT 1");
+        $db->Execute("ALTER TABLE appointments ADD decline_reason TEXT");
         $db->Execute("CREATE TABLE nt_attendiees(
                         fk_appointment INT NOT NULL,
                         fk_user INT NOT NULL
@@ -84,6 +85,7 @@ class install_lib
                 NULL ,  'Quản trị hệ thống',  'Quản trị hệ thống',  'admin@gmail.com',  '01666244670',  'e10adc',  '0',  '1',  '1',  'admin'
             );
             ");
+        
         if (!$db->CompleteTrans())
         {
             die('Khởi tạo CSDL thất bại');

@@ -163,7 +163,7 @@ function user()
  */
 function redirect($uri, $params = array())
 {
-    $url = trim(site_url($uri, $params), '/');
+    $url = rtrim(site_url($uri, $params), '/');
     header('Location: ' . $url);
     exit;
 }
@@ -311,4 +311,22 @@ function sync_vdm_user($account)
             'loglevel'             => 0
         ));
     }
+}
+
+/**
+ * @param array $to
+ * @param string $message
+ */
+function send_sms($to, $message)
+{
+    if (!is_array($to))
+    {
+        return;
+    }
+    $url = SMS_URL;
+    $url .= '?text=' . urlencode($message);
+    $url .= '&username=' . SMS_USER;
+    $url .= '&password=' . SMS_PASS;
+    $url .= '&to=' . urlencode(implode(' ', $to));
+    file_get_contents($url);
 }
