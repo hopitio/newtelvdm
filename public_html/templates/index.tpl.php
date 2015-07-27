@@ -21,7 +21,7 @@
         <?php endif; ?>
         <?php foreach ($arr_host_conf as $conf): ?>
             <?php
-            $start_date = DateTimeEx::create($conf['startTime'])->addHour(8);
+            $start_date = DateTimeEx::create($conf['startTime'])->addHour(7);
             $end_date = DateTimeEx::create($conf['finishTime'])->addHour(7);
             $now = DateTimeEx::create();
             $join_url = site_url('/join_conf', array('app_id' => $conf['app_id']));
@@ -59,6 +59,9 @@
                             <i class="fa fa-arrow-circle-right"></i> Tham gia
                         </button>
                     <?php endif; ?>
+                    <a href="<?php echo $conf['sms_url'] ?>" class="btn btn-default btn-xs" title="Gửi tin nhắn">
+                        <i class="fa fa-envelope"></i> SMS
+                    </a>
                     <a href="<?php echo $manage_url ?>" class="btn btn-default btn-xs">
                         <i class="fa fa-edit"></i> Sửa cuộc họp
                     </a>
@@ -90,7 +93,7 @@
         <?php endif; ?>
         <?php foreach ($arr_invited_conf as $conf): ?>
             <?php
-            $start_date = DateTimeEx::create($conf['startTime'])->addHour(8);
+            $start_date = DateTimeEx::create($conf['startTime'])->addHour(7);
             $end_date = DateTimeEx::create($conf['finishTime'])->addHour(7);
             $now = DateTimeEx::create();
             $join_url = site_url('/join_conf', array('app_id' => $conf['app_id']));

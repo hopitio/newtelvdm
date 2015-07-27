@@ -15,7 +15,7 @@
         <?php endif; ?>
         <?php foreach ($arr_conf as $conf): ?>
             <?php
-            $start_date = DateTimeEx::create($conf['startTime'])->addHour(8);
+            $start_date = DateTimeEx::create($conf['startTime'])->addHour(7);
             $end_date = DateTimeEx::create($conf['finishTime'])->addHour(7);
             $manage_url = site_url('/edit_app', array('app_id' => $conf['app_id']));
             ?>

@@ -98,7 +98,7 @@ if ($_POST)
         //gui sms cho admin
         $msg = "He thong HNTT TP\n" .
                 tieng_viet_khong_dau(user()->name) . ' chinh sua cuoc hop: ' . tieng_viet_khong_dau(get_post_var('txt_conf_name'));
-        send_sms(SMS_ADMIN, $msg);
+        send_sms(array(SMS_ADMIN), $msg);
 
         redirect('/');
     }

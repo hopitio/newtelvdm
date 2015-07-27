@@ -24,7 +24,7 @@
                         <label for="txt_conf_start_date">Bắt đầu<span class="red"> *</span></label>
                         <div class="row">
                             <?php
-                            $begin = DateTimeEx::create($app['startTime'])->addHour(8);
+                            $begin = DateTimeEx::create($app['startTime'])->addHour(7);
                             ?>
                             <div class="col-sm-6">
                                 <input type="text" name="txt_conf_start_date" id="txt_conf_start_date" class="form-control datepicker" 

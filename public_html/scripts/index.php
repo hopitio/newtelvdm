@@ -15,6 +15,12 @@ $sql = "SELECT app.*,crc.status FROM appointments app"
         . " AND is_approved=1"
         . " ORDER BY startTime";
 $view_data['arr_host_conf'] = $db->GetAll($sql, array(user()->pk_user));
+foreach ($view_data['arr_host_conf'] as &$conf)
+{
+    //thêm url sms
+    $arr_attendiees = $db->GetCol("SELECT fk_user FROM nt_attendiees WHERE fk_appointment=?", array($conf['app_id']));
+    $conf['sms_url'] = sms_url($arr_attendiees, $arr_attendiees, $conf['app_id']);
+}
 
 $sql = "SELECT app.*,crc.status, u.c_name AS owner_name"
         . " FROM appointments app"

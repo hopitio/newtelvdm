@@ -43,7 +43,7 @@
             <?php endif; ?>
             <?php foreach ($arr_conf as $conf): ?>
                 <?php
-                $start_date = DateTimeEx::create($conf['startTime'])->addHour(8);
+                $start_date = DateTimeEx::create($conf['startTime'])->addHour(7);
                 $end_date = DateTimeEx::create($conf['finishTime'])->addHour(7);
                 $now = DateTimeEx::create();
                 $join_url = site_url('/join_conf', array('app_id' => $conf['app_id']));
@@ -122,10 +122,6 @@
                             <a href="<?php echo $recording_url ?>" class="btn btn-default btn-xs" title="Recording">
                                 <i class="fa fa-film"></i>
                             </a>
-                            <button type="button" class="btn btn-default btn-xs" data-app_id="<?php echo $conf['app_id'] ?>"
-                                    data-confroom_id="<?php echo $confroom_id ?>" title="Xóa" onclick="btn_delete_onclick(this)">
-                                <i class="fa fa-trash"></i>
-                            </button>
                         <?php endif; ?>
                     </td>
                 </tr>

@@ -4,7 +4,7 @@ if ($app)
     $arr_template = array();
     $template_dir = __DIR__ . '/sms';
 
-    $begin = DateTimeEx::create($app['startTime'])->addHour(8);
+    $begin = DateTimeEx::create($app['startTime'])->addHour(7);
     $end = DateTimeEx::create($app['finishTime'])->addHour(7);
 
     $arr_template_data = array(

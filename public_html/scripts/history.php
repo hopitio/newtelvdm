@@ -6,7 +6,7 @@ $db = DB::get_instance();
 $limit = 20;
 $offset = ((int) get_request_var('page', 1) - 1) * $limit;
 
-$today = DateTimeEx::create($db->get_date())->format('Y-m-d');
+$today = DateTimeEx::create($db->get_date())->addHour(-7)->toIsoString();
 
 $params = array(user()->pk_user);
 $cond_is_admin = user()->is_admin ? 'is_deleted=1' : '1=0';
@@ -25,7 +25,6 @@ $sql = "SELECT DISTINCT app.*, u.c_name AS owner_name FROM appointments app
         . " AND finishTime < '$today'"
         . " AND is_approved=1)"
         . " OR $cond_is_admin
-            OR owner_id=$pk_user
                     "
         . " ORDER BY startTime DESC
             LIMIT $limit OFFSET $offset";
@@ -35,7 +34,7 @@ $sql_count = "SELECT COUNT(DISTINCT app.app_id) FROM appointments app
         . " WHERE (is_deleted=0"
         . " AND finishTime < '$today'"
         . " AND is_approved=1)"
-        . " OR owner_id=$pk_user OR $cond_is_admin";
+        . " OR $cond_is_admin";
 
 $view_data['arr_conf'] = $db->GetAll($sql, $params);
 $total_record = (int) $db->GetOne($sql_count, $params);
