@@ -37,7 +37,7 @@ else if ($app_id = get_post_var('btn_decline'))
     $db->update('appointments', $data, 'app_id=?', array($app_id));
 
     //msg
-    $msg = SMS_HEADER . "\n" . tieng_viet_khong_dau($app['topic']) . " da bi tu choi voi ly do: " . tieng_viet_khong_dau($app['decline_reason']);
+    $msg = SMS_HEADER . "\n" . tieng_viet_khong_dau($app['topic']) . " da bi tu choi voi ly do: " . tieng_viet_khong_dau($data['decline_reason']);
     send_sms(array($phone), $msg);
 
     redirect('/admin/approve', array('page' => $page));

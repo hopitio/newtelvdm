@@ -131,9 +131,9 @@
                     <a href="javascript:;" class="btn btn-default btn-sm" ng-click="check(true)">Chọn tất cả</a>
                     <a href="javascript:;"  class="btn btn-default btn-sm" ng-click="check(false)">Bỏ chọn tất cả</a>
                     <h4></h4>
-                    <div ng-repeat="user in users| filter: search" ng-cloak>
+                    <div ng-repeat="user in users | filter: search" ng-cloak>
                         <label class="inline">
-                            <input type="checkbox" name="chk_user[]" class="chk" value="{{user.pk_user}}" ng-model="items[$index]">
+                            <input type="checkbox" name="chk_user[]" class="chk" value="{{user.pk_user}}" ng-model="items[user.pk_user]">
                             {{user.c_name}}
                         </label>
                     </div>
@@ -178,9 +178,10 @@
         $scope.check = function (checked) {
             setTimeout(function () {
                 $scope.$apply(function () {
-                    $('.chk').each(function (index) {
-                        $scope.items[index] = checked;
-                    });
+                    for (var i in $scope.users) {
+                        var user = $scope.users[i];
+                        $scope.items[user.pk_user] = true;
+                    }
                 });
             });
 
