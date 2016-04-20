@@ -49,12 +49,18 @@ if (!empty($_POST))
         }
         else
         {
-            $max_sort = (int) $db->GetOne("SELECT MAX(c_sort) FROM nt_user");
-            $update_data['c_sort'] = $max_sort + 1;
-            $user_id = $db->insert('nt_user', $update_data);
-            sync_vdm_user($account);
+			$count_user = $db->GetOne("SELECT count(*) FROM nt_user WHERE c_deleted=0");
+			if($count_user >= MAX_USER){
+				$view_data['error'] = 'Đã quá số lượng['.MAX_USER.'] tài khoản có thể tạo, vui lòng nâng cấp License.';
+			}else{
+				$max_sort = (int) $db->GetOne("SELECT MAX(c_sort) FROM nt_user");
+				$update_data['c_sort'] = $max_sort + 1;
+				$user_id = $db->insert('nt_user', $update_data);
+				sync_vdm_user($account);
+			}
         }
-        redirect('/admin/account');
+		if (!isset($view_data['error']))
+			redirect('/admin/account');
     }
 }
 
