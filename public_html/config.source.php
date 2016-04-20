@@ -27,6 +27,8 @@ define('VIDEOMOST_ADMIN_PASS', '{{VIDEOMOST_ADMIN_PASS}}');
 //có trick HD không
 define('VIDEOMOST_TRICK_HD', '{{VIDEOMOST_TRICK_HD}}');
 
+define('MAX_USER', '50');
+
 
 date_default_timezone_set('asia/saigon');
 
